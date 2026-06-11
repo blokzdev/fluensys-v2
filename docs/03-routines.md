@@ -1,18 +1,64 @@
 # 03 — Authoring Routines (binding contract)
 
 This document is the **contract** for any agent (or human) that authors
-Journal articles — the GitHub-triggered routines point here as their
+Journal articles — the Claude Code Routines' prompts point here as their
 instruction set. Follow it exactly; CI enforces most of it.
 
-## Triggers
+## How the routines run
 
-| Routine | Trigger | Workflow |
+Authoring runs as **Claude Code Routines** (claude.ai/code/routines):
+saved cloud sessions on Anthropic-managed infrastructure, drawing on the
+operator's claude.ai subscription — **no `ANTHROPIC_API_KEY` or other
+model credentials live in this repo**. Each run clones the repo from
+`main`, works on a `claude/`-prefixed branch (the routine default — leave
+"Allow unrestricted branch pushes" off), and opens a PR. Branch protection
++ required CI on `main` remain the merge gate.
+
+| Routine | Trigger | Repo-side piece |
 | --- | --- | --- |
-| **Commissioned article** | Issue with label `commission` (template: "📝 Commission an Article"), opened by a user listed in `.github/routines/authors.json` | `.github/workflows/commission-article.yml` |
-| **Scheduled article** | Weekly cron (opt-in via repo variable `ENABLE_SCHEDULED_ARTICLES=true`) or manual dispatch | `.github/workflows/scheduled-article.yml` |
+| **Commissioned article** | Issue labeled `commission` (template: "📝 Commission an Article") → `.github/workflows/commission-dispatch.yml` checks the author allowlist and POSTs the issue context to the routine's **API trigger** | dispatch workflow + secrets |
+| **Scheduled article** | The routine's own **Schedule trigger** (weekly recommended) | none — configured entirely in the Claude app |
 
-Secrets required: `ANTHROPIC_API_KEY` (repo secret). Unauthorized
-commission issues are ignored (the authorize job fails closed).
+Why API-dispatch for commissions rather than the routine's native GitHub
+trigger: routine GitHub triggers currently support only `pull_request` and
+`release` events (not issues), and the in-repo dispatch keeps the
+allowlist gate fail-closed and auditable in version control. The dispatch
+fires on the `labeled` event, so re-applying the `commission` label
+re-triggers a commission.
+
+The instruction prompts for both routines are **versioned in this repo** —
+`.github/routines/commission-routine.md` and
+`.github/routines/scheduled-routine.md`. If you change them, update the
+live routines to match (and vice versa).
+
+## Create the routines (one-time operator setup)
+
+1. At [claude.ai/code/routines](https://claude.ai/code/routines) create
+   **"FluenSys: Commission Article"**: repo `blokzdev/fluensys-v2`, paste
+   the prompt from `.github/routines/commission-routine.md`, pick a strong
+   model (Opus-class), Default environment.
+2. Trigger: **API** → save → copy the fire URL and generate the token
+   (shown once). Add both as repo secrets:
+   `CLAUDE_ROUTINE_FIRE_URL` and `CLAUDE_ROUTINE_TOKEN`
+   (Settings → Secrets and variables → Actions).
+3. **Connectors**: remove all of them — the routine needs only the repo,
+   shell and web access. (Connectors run with write access and no
+   approval prompts; least privilege applies.)
+4. **Permissions**: leave branch pushes restricted to `claude/` prefixes.
+5. Repeat for **"FluenSys: Scheduled Article"** with the prompt from
+   `.github/routines/scheduled-routine.md` and a **Schedule** trigger
+   (weekly). No repo secrets needed.
+6. Environment note: the Default (Trusted) network policy covers GitHub
+   and npm. Mode-B PDF generation downloads a Chromium build via
+   Playwright — if that download is blocked in a run, either add the
+   Playwright CDN domains to the environment's Allowed domains or accept
+   the contract's PDF-failure fallback (PR lands without the PDF; a human
+   runs `npm run pdf` locally).
+
+Routine runs act under the operator's GitHub identity (commits/PRs appear
+as that user) and consume claude.ai subscription usage; daily routine-run
+caps apply. Watch any run live via the session URL the dispatch workflow
+comments on the issue.
 
 ## The two commissioning modes
 
@@ -75,7 +121,8 @@ The commissioner attached a PDF to the issue (GitHub uploads it and puts a
    on the existing articles' pattern ("While every effort has been made…").
 7. **Validate**: `npm run content:validate` then `npm run build` — both
    must pass locally before pushing.
-8. **PR**: branch `content/<slug>`; title `content: <article title> (#<issue>)`
+8. **PR**: branch `claude/content-<slug>` (routines may only push
+   `claude/`-prefixed branches); title `content: <article title> (#<issue>)`
    (or `(scheduled)`); body summarises the brief, editorial decisions,
    sources used and PDF provenance; `Closes #<issue>` for commissions.
    Never commit directly to main.

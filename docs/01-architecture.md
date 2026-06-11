@@ -6,9 +6,13 @@
                     GitHub (public repo, source of truth)
                     ├── content/            ← the content lake (git-native CMS)
                     ├── src/                ← Next.js 16 app
-                    └── .github/workflows/  ← CI + authoring routines
+                    └── .github/workflows/  ← CI + commission dispatch
                               │
-        issues / cron ────────┤  (Claude-powered routines author article PRs)
+   commission issue → dispatch workflow (allowlist gate) → API trigger ─┐
+   weekly schedule (configured at claude.ai/code/routines) ─────────────┤
+                              │                                         ▼
+                              │     Claude Code Routine (Anthropic cloud)
+                              │◄──── authors article folder, opens PR
                               ▼
                     Vercel build:  npm run build
                     ├── scripts/content.mjs  validate → sync assets → search index

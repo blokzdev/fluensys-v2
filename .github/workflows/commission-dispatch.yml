@@ -1,0 +1,94 @@
+name: "Routine: Commission Dispatch"
+
+# Bridges GitHub commission issues to the Claude Code authoring routine
+# (claude.ai/code/routines). Routines' native GitHub triggers only cover
+# pull_request and release events — not issues — so this slim workflow
+# gates the request against the author allowlist and fires the routine's
+# API trigger with the issue context as the run payload.
+#
+# Required repo secrets (from the routine's API trigger modal — see
+# docs/03-routines.md → "Create the routines"):
+#   CLAUDE_ROUTINE_FIRE_URL   e.g. https://api.anthropic.com/v1/claude_code/routines/trig_xxx/fire
+#   CLAUDE_ROUTINE_TOKEN      the routine's bearer token (shown once)
+#
+# Fires on the `labeled` event only: applying the `commission` label is the
+# trigger, whether at creation (the issue template applies it) or manually.
+# Re-trigger a commission by removing and re-adding the label.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: commission-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.event.label.name == 'commission'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check author allowlist
+        id: gate
+        env:
+          ACTOR: ${{ github.event.issue.user.login }}
+        run: |
+          if jq -e --arg actor "$ACTOR" '.authorizedAuthors | index($actor)' .github/routines/authors.json > /dev/null; then
+            echo "authorized=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "authorized=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::@$ACTOR is not in .github/routines/authors.json — commission ignored."
+          fi
+
+      - name: Fire the authoring routine
+        if: steps.gate.outputs.authorized == 'true'
+        id: fire
+        env:
+          FIRE_URL: ${{ secrets.CLAUDE_ROUTINE_FIRE_URL }}
+          FIRE_TOKEN: ${{ secrets.CLAUDE_ROUTINE_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          if [ -z "$FIRE_URL" ] || [ -z "$FIRE_TOKEN" ]; then
+            echo "::error::CLAUDE_ROUTINE_FIRE_URL / CLAUDE_ROUTINE_TOKEN secrets are not configured (docs/03-routines.md)."
+            exit 1
+          fi
+
+          payload=$(jq -n \
+            --arg number "$ISSUE_NUMBER" \
+            --arg title  "$ISSUE_TITLE" \
+            --arg author "$ISSUE_AUTHOR" \
+            --arg url    "$ISSUE_URL" \
+            --arg body   "$ISSUE_BODY" \
+            '{text: ("COMMISSION REQUEST (verified against .github/routines/authors.json by the dispatch workflow)\n\nIssue: #" + $number + "\nURL: " + $url + "\nCommissioned by: @" + $author + "\nTitle: " + $title + "\n\n--- ISSUE BODY ---\n" + $body)}')
+
+          response=$(curl -sS --fail-with-body -X POST "$FIRE_URL" \
+            -H "Authorization: Bearer $FIRE_TOKEN" \
+            -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "Content-Type: application/json" \
+            -d "$payload")
+
+          echo "$response"
+          session_url=$(echo "$response" | jq -r '.claude_code_session_url // empty')
+          echo "session_url=$session_url" >> "$GITHUB_OUTPUT"
+
+      - name: Acknowledge on the issue
+        if: steps.gate.outputs.authorized == 'true' && steps.fire.outputs.session_url != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SESSION_URL: ${{ steps.fire.outputs.session_url }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --repo "${{ github.repository }}" --body \
+            "🛠️ Authoring routine dispatched — session: ${SESSION_URL}
+
+          The routine will open a PR referencing this issue when the article is ready (contract: docs/03-routines.md)."

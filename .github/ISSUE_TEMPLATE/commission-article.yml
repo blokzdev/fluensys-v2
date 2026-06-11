@@ -8,7 +8,9 @@ body:
       value: |
         ## Commission a FluenSys Journal article
         Only authorized authors (listed in `.github/routines/authors.json`) can trigger the
-        authoring routine. Submissions from other accounts are politely ignored by CI.
+        authoring routine — the dispatch workflow politely ignores submissions from other
+        accounts. Applying the `commission` label is what triggers dispatch; remove and
+        re-add it to re-trigger.
 
         **Two modes:**
         1. **Brief only** — describe the topic; the routine researches, writes the article,

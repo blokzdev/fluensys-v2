@@ -32,7 +32,7 @@ npm run dev                  # http://localhost:3000
 content/   ← articles (MDX+assets+PDF per folder), authors, taxonomy, site copy
 src/       ← Next.js app: static-first pages, GSAP/three motion, Firebase islands
 scripts/   ← content pipeline (validate/sync/index) + PDF generation
-.github/   ← CI + authoring routines (commission via issue, weekly scheduled)
+.github/   ← CI + commission dispatch + versioned routine prompts
 docs/      ← the operating manual — start at docs/00-vision.md
 ```
 
@@ -46,11 +46,15 @@ Read **[CLAUDE.md](CLAUDE.md)** (engineering ground rules) and the
 
 ## Commissioning an article
 
-Open a **"📝 Commission an Article"** issue (template provided). Authorized
-authors (`.github/routines/authors.json`) trigger the routine: attach a
-pre-authored PDF to have the web article formulated from it, or provide a
-brief and the routine researches, writes, illustrates and generates the PDF
-— always delivered as a PR for human review.
+Open a **"📝 Commission an Article"** issue (template provided). For
+authorized authors (`.github/routines/authors.json`), the dispatch
+workflow fires a [Claude Code Routine](https://code.claude.com/docs/en/routines)
+that authors the piece: attach a pre-authored PDF to have the web article
+formulated from it, or provide a brief and the routine researches, writes,
+illustrates and generates the PDF — always delivered as a PR for human
+review. A second, scheduled routine works through
+[docs/editorial-backlog.md](docs/editorial-backlog.md) weekly. Setup:
+[docs/03-routines.md](docs/03-routines.md).
 
 ## License
 
