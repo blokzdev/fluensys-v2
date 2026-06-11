@@ -29,7 +29,7 @@ priorities, not strict gates.
       (Firebase web config, `FIREBASE_SERVICE_ACCOUNT_KEY`,
       `RESEND_API_KEY`)
 - [x] Vercel project connected to the repo (preview deploys on PRs)
-- [ ] Wire the `firestore-deploy` workflow: grant the service account
+- [x] Wire the `firestore-deploy` workflow: grant the service account
       `roles/firebase.admin` in IAM, add `FIREBASE_SERVICE_ACCOUNT_KEY`
       as a **repository secret**, then run the workflow once to green
 - [ ] Create the two Claude Code routines at claude.ai/code/routines
@@ -37,21 +37,47 @@ priorities, not strict gates.
       `CLAUDE_ROUTINE_FIRE_URL` + `CLAUDE_ROUTINE_TOKEN`; scheduled:
       weekly) per docs/03 §Create the routines, then dry-run a commission
       issue end-to-end
-- [ ] Verify Firebase features on a production deploy (Google sign-in
-      popup, bookmark, comment, newsletter subscribe; add the Vercel and
-      fluensys.co.uk domains to Firebase Authorized domains if
-      `auth/unauthorized-domain` appears)
-- [ ] Resend domain verification for journal@fluensys.co.uk
-      (DKIM/SPF/DMARC — runbook in docs/05 §Resend domain setup)
-- [ ] Domain cutover (www.fluensys.co.uk → Vercel) + production smoke
-      test (/sitemap.xml, /feed.xml, legacy PDF redirects)
-- [ ] Google Search Console + Bing verification, sitemap submission
+- [ ] Verify Firebase features end-to-end on the Vercel deployment
+      (Google sign-in popup, bookmark, comment, newsletter subscribe) —
+      env vars are set in Production and the Vercel + fluensys.co.uk
+      domains are already in Firebase Auth Authorized domains
+- [x] Resend domain verification for journal@fluensys.co.uk (DKIM/SPF on
+      `send.` subdomain + combined DMARC live in Cloudflare; coexists
+      with the Microsoft 365 apex MX — layout in docs/05)
 - [ ] Visual QA pass on real devices (360px → 4K); Lighthouse ≥ 95 across
       the board; tune hero particle count on low-end mobile
 - [ ] Legal review of privacy/terms drafts
 - [ ] Favicon/wordmark refresh (current assets carried from v1)
 - [ ] Analytics decision: GTM (`NEXT_PUBLIC_GTM_ID` is plumbed) and/or
       Vercel Analytics — implement consent UI before enabling
+
+## Launch gate — domain cutover (deliberately last)
+
+Development continues on the new stack while www.fluensys.co.uk keeps
+serving v1. The DNS side is already done: Cloudflare points the apex
+(A 76.76.21.21) and `www` (CNAME cname.vercel-dns.com) at Vercel — the
+**v1 Vercel project simply still owns the domain assignment**. Cutover
+is therefore a two-minute, instantly-reversible flip, executed only when
+Phase 1 is complete and the site is signed off:
+
+1. **Pre-flight**: every Phase 1 box ticked and a fresh Production
+   deploy. (Already in place: Production env vars —
+   `NEXT_PUBLIC_SITE_URL` + Firebase set — and the Firebase Auth
+   Authorized domains for Vercel and fluensys.co.uk.)
+2. **Release**: old Vercel project → Settings → Domains → remove
+   `fluensys.co.uk` and `www.fluensys.co.uk`.
+3. **Claim**: v2 project → Settings → Domains → add
+   `www.fluensys.co.uk` (primary) and `fluensys.co.uk` (redirect → www).
+   Verification is instant — DNS already points correctly.
+4. **Smoke tests**: `/`, `/blog`, one article, `/sitemap.xml`,
+   `/feed.xml`, a legacy PDF URL (expect 301 → new path), Google
+   sign-in, bookmark, newsletter subscribe.
+5. **Search engines**: Google Search Console + Bing — verify the domain
+   property, submit `/sitemap.xml`, then crawl the v1 URL list and
+   confirm every page answers 200/301 (no 404s from v1).
+6. **Rollback** (if ever needed): re-add the domains to the old project —
+   takes effect immediately; the v1 site remains deployed at its own
+   vercel.app URL indefinitely.
 
 ## Phase 2 — Engagement & growth
 

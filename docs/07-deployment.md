@@ -8,9 +8,11 @@
    `NEXT_PUBLIC_SITE_URL` (production: `https://www.fluensys.co.uk`;
    previews can omit → falls back to the production URL for metadata) and
    the `NEXT_PUBLIC_FIREBASE_*` block once Firebase is provisioned.
-3. Domains: add `www.fluensys.co.uk` (primary) and `fluensys.co.uk`
-   (redirect → www). Update DNS at the registrar (CNAME www →
-   cname.vercel-dns.com; A/ALIAS apex per Vercel's instructions).
+3. Domains: **deferred to the launch gate.** Cloudflare DNS already
+   points the apex and `www` at Vercel; the v1 project holds the domain
+   assignment until v2 is signed off. The flip procedure (release from
+   old project → claim in v2 → smoke tests → rollback path) lives in
+   docs/08-roadmap.md §Launch gate.
 4. Node version: 22.x (default). No other settings needed — no serverless
    functions beyond Next defaults; everything is static.
 
