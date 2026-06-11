@@ -84,18 +84,23 @@ src/lib/firebase/         # lazy client, db helpers
 src/lib/seo.ts            # site constants + JSON-LD builders
 src/components/           # home/ blog/ mdx/ motion/ three/ layout/ ui/ auth/ providers/
 src/app/                  # routes (/, /blog, /blog/[category], /blog/[category]/[slug], print, feed.xml, sitemap, robots)
-.github/workflows/        # ci + authoring routines (commission/scheduled)
-.github/routines/authors.json  # allowlist for commissioning
+.github/workflows/        # ci + commission dispatch (fires the Claude routine)
+.github/routines/         # commissioner allowlist + versioned routine prompts
 firestore.rules           # security rules — review on any Firestore change
 ```
 
 ## Authoring routines
 
-GitHub-triggered agents author articles into the content lake
-(docs/03-routines.md is the binding contract — folder layout, frontmatter,
-PDF rules, validation, PR conventions). Commission issues are gated by the
-allowlist in `.github/routines/authors.json`. If you change the content
-schema, update: `src/lib/content/schema.ts`, `scripts/content.mjs`,
+Articles are authored by **Claude Code Routines** (claude.ai/code/routines
+— cloud sessions on the operator's claude.ai subscription; no model API
+keys in this repo). docs/03-routines.md is the binding contract — folder
+layout, frontmatter, PDF rules, validation, PR conventions. Commission
+issues are gated by `.github/routines/authors.json` and bridged to the
+routine's API trigger by `.github/workflows/commission-dispatch.yml`; the
+scheduled routine is configured entirely in the Claude app. The live
+routine prompts are versioned in `.github/routines/*-routine.md` — keep
+them in sync with the app. If you change the content schema, update:
+`src/lib/content/schema.ts`, `scripts/content.mjs`,
 docs/02-content-pipeline.md and docs/03-routines.md — in the same PR.
 
 ## Design language (summary — full spec in docs/04-design-system.md)

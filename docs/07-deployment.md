@@ -24,10 +24,16 @@ changes `firestore.rules`.
 
 | Setting | Value |
 | --- | --- |
-| Secret `ANTHROPIC_API_KEY` | required for authoring routines |
-| Variable `ENABLE_SCHEDULED_ARTICLES` | `true` to activate the weekly routine |
+| Secret `CLAUDE_ROUTINE_FIRE_URL` | the commission routine's API-trigger URL (docs/03 §Create the routines) |
+| Secret `CLAUDE_ROUTINE_TOKEN` | the commission routine's bearer token (shown once — store immediately) |
 | Branch protection on `main` | require the CI check ("Validate, typecheck & build"); routines and humans both merge via PR |
 | `.github/routines/authors.json` | keep the commissioner allowlist current |
+
+No model API keys are stored anywhere: authoring runs as Claude Code
+Routines (claude.ai/code/routines) on the operator's claude.ai
+subscription. The two routines themselves (commission API-triggered,
+scheduled weekly) are created once in the Claude app — full steps in
+docs/03-routines.md §Create the routines.
 
 ## Release flow
 
@@ -44,6 +50,12 @@ is the editorial gate (flip `status: review` → `published` there).
 - **Add an authorized commissioner**: edit `.github/routines/authors.json`
   (PR). For credited authorship also add `content/authors/<id>.json` and a
   template option in `.github/ISSUE_TEMPLATE/commission-article.yml`.
+- **Rotate the routine token**: routine detail page → API trigger modal →
+  Regenerate; update the `CLAUDE_ROUTINE_TOKEN` repo secret.
+- **Re-trigger a commission**: remove and re-apply the `commission` label
+  on the issue (the dispatch fires on the `labeled` event).
+- **Pause the scheduled routine**: toggle it off on its detail page at
+  claude.ai/code/routines (configuration is retained).
 - **Add a category**: `content/taxonomy/categories.json` (+ optionally the
   newsletter topics list in `NewsletterForm.tsx` and the issue template
   dropdown). Pages/filters/sitemap pick it up automatically.
@@ -61,5 +73,8 @@ is the editorial gate (flip `status: review` → `published` there).
 - Vercel Analytics/Speed Insights can be enabled per-project (no code
   change required to start; revisit a `@vercel/analytics` integration in
   the roadmap).
-- GitHub Actions tab is the routine audit log; every authored article is a
-  PR with full provenance (issue link, prompt, diff).
+- Routine runs are auditable end-to-end: the dispatch run in the GitHub
+  Actions tab, the live session transcript at claude.ai/code/routines
+  (linked from the workflow's comment on the issue), and the resulting PR
+  diff. Note a green run status only means the session completed — read
+  the transcript/PR to confirm the task itself succeeded.

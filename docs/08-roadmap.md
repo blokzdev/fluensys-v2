@@ -16,13 +16,18 @@ priorities, not strict gates.
 - [x] SEO layer: metadata, JSON-LD, sitemap, robots, RSS, legacy redirects
 - [x] Firebase client layer: guest/Google auth, bookmarks, comments,
       newsletter capture + firestore.rules
-- [x] Routines: commission issue template + allowlisted workflow, scheduled
-      workflow, PDF generation script, authoring contract (docs/03)
+- [x] Routines: commission issue template + allowlisted API-dispatch
+      workflow (bridges issues → Claude Code Routine), versioned routine
+      prompts, PDF generation script, authoring contract (docs/03)
 - [x] CI (validate → typecheck → build), licensing split, docs suite,
       CLAUDE.md, .env.example
 
 ## Phase 1 — Launch readiness
 
+- [ ] Create the two Claude Code routines at claude.ai/code/routines
+      (commission: API trigger → repo secrets `CLAUDE_ROUTINE_FIRE_URL` +
+      `CLAUDE_ROUTINE_TOKEN`; scheduled: weekly) per docs/03 §Create the
+      routines, then dry-run a commission issue end-to-end
 - [ ] Provision Firebase project + deploy rules; set Vercel env vars
 - [ ] Vercel project + domain cutover (www.fluensys.co.uk)
 - [ ] Google Search Console + Bing verification, sitemap submission
