@@ -24,19 +24,25 @@ identity system powering newsletter capture, bookmarks and comments.
 2. **Authentication** → enable **Google** and **Anonymous** providers; add
    `fluensys.co.uk` and the Vercel preview domain to Authorized domains.
 3. **Firestore** → create database (production mode).
-4. Deploy rules (the repo ships `firebase.json` but no `.firebaserc`, so
-   bind your project once):
+4. Deploy rules & indexes. **Normal path: automatic.** The
+   `firestore-deploy` workflow deploys `firestore.rules` +
+   `firestore.indexes.json` whenever they change on `main` (or via manual
+   workflow dispatch). It needs the `FIREBASE_SERVICE_ACCOUNT_KEY` **repo
+   secret** (same single-line JSON as the Vercel variable) and the service
+   account needs the **Firebase Admin** role (`roles/firebase.admin`) —
+   the auto-generated `firebase-adminsdk` account from the console
+   qualifies once granted that role in IAM. Manual fallback from any
+   clone (`.firebaserc` pins the project):
 
    ```bash
    npm i -g firebase-tools
    firebase login
-   firebase use --add          # select the project, alias it "default"
-   firebase deploy --only firestore:rules
+   firebase deploy --only firestore
    ```
 
-   `firebase use --add` writes `.firebaserc` — commit it (the project id is
-   not a secret; it ships in the NEXT_PUBLIC_* vars anyway). The Firestore
-   database (step 3) must exist before rules can deploy.
+   The Firestore database (step 3) must exist before the first deploy.
+   Obsolete index deletion is deliberately manual (console) — CI only
+   adds.
 5. Copy the web-app config into the `NEXT_PUBLIC_FIREBASE_*` vars
    (`.env.example`) locally and on Vercel.
 

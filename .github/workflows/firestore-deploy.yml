@@ -1,0 +1,52 @@
+name: Deploy Firestore rules & indexes
+
+# Keeps the deployed Firestore configuration in lockstep with main:
+# whenever firestore.rules / firestore.indexes.json change (or on manual
+# dispatch), deploy them with the service account stored in the
+# FIREBASE_SERVICE_ACCOUNT_KEY repo secret (same single-line JSON as the
+# Vercel variable — see .env.example).
+#
+# Notes:
+# - The target project comes from .firebaserc.
+# - Index *additions* deploy automatically; obsolete index *deletion* is
+#   intentionally left manual (Firebase console) to avoid destructive
+#   surprises from CI.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - firestore.rules
+      - firestore.indexes.json
+      - firebase.json
+      - .firebaserc
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: firestore-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Deploy Firestore rules & indexes
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT_KEY" ]; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT_KEY repo secret is not set (see docs/05-firebase.md)."
+            exit 1
+          fi
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT_KEY" > "$RUNNER_TEMP/firebase-sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-sa.json"
+          npx firebase-tools deploy --only firestore --non-interactive
