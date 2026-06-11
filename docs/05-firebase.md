@@ -24,8 +24,19 @@ identity system powering newsletter capture, bookmarks and comments.
 2. **Authentication** → enable **Google** and **Anonymous** providers; add
    `fluensys.co.uk` and the Vercel preview domain to Authorized domains.
 3. **Firestore** → create database (production mode).
-4. Deploy rules: `npm i -g firebase-tools && firebase login && firebase deploy --only firestore:rules`
-   (project config in `firebase.json`).
+4. Deploy rules (the repo ships `firebase.json` but no `.firebaserc`, so
+   bind your project once):
+
+   ```bash
+   npm i -g firebase-tools
+   firebase login
+   firebase use --add          # select the project, alias it "default"
+   firebase deploy --only firestore:rules
+   ```
+
+   `firebase use --add` writes `.firebaserc` — commit it (the project id is
+   not a secret; it ships in the NEXT_PUBLIC_* vars anyway). The Firestore
+   database (step 3) must exist before rules can deploy.
 5. Copy the web-app config into the `NEXT_PUBLIC_FIREBASE_*` vars
    (`.env.example`) locally and on Vercel.
 
