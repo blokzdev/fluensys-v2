@@ -24,19 +24,25 @@ identity system powering newsletter capture, bookmarks and comments.
 2. **Authentication** → enable **Google** and **Anonymous** providers; add
    `fluensys.co.uk` and the Vercel preview domain to Authorized domains.
 3. **Firestore** → create database (production mode).
-4. Deploy rules (the repo ships `firebase.json` but no `.firebaserc`, so
-   bind your project once):
+4. Deploy rules & indexes. **Normal path: automatic.** The
+   `firestore-deploy` workflow deploys `firestore.rules` +
+   `firestore.indexes.json` whenever they change on `main` (or via manual
+   workflow dispatch). It needs the `FIREBASE_SERVICE_ACCOUNT_KEY` **repo
+   secret** (same single-line JSON as the Vercel variable) and the service
+   account needs the **Firebase Admin** role (`roles/firebase.admin`) —
+   the auto-generated `firebase-adminsdk` account from the console
+   qualifies once granted that role in IAM. Manual fallback from any
+   clone (`.firebaserc` pins the project):
 
    ```bash
    npm i -g firebase-tools
    firebase login
-   firebase use --add          # select the project, alias it "default"
-   firebase deploy --only firestore:rules
+   firebase deploy --only firestore
    ```
 
-   `firebase use --add` writes `.firebaserc` — commit it (the project id is
-   not a secret; it ships in the NEXT_PUBLIC_* vars anyway). The Firestore
-   database (step 3) must exist before rules can deploy.
+   The Firestore database (step 3) must exist before the first deploy.
+   Obsolete index deletion is deliberately manual (console) — CI only
+   adds.
 5. Copy the web-app config into the `NEXT_PUBLIC_FIREBASE_*` vars
    (`.env.example`) locally and on Vercel.
 
@@ -88,3 +94,27 @@ Resend (`RESEND_API_KEY`), rendered from the same content lake (new
 articles since last digest, filtered by subscriber `topics[]`), triggered
 by a GitHub scheduled workflow using the Admin SDK to read subscribers.
 Include one-click unsubscribe (signed token link → deletes the doc).
+
+### Resend domain setup (one-time, prerequisite for sending)
+
+`journal@fluensys.co.uk` can only send once the domain is verified —
+until then Resend is sandboxed to `onboarding@resend.dev` and your own
+inbox.
+
+1. Resend dashboard → **Domains → Add Domain** → `fluensys.co.uk`,
+   region **EU (Ireland)** to match the UK audience.
+2. Add the DNS records Resend displays — a DKIM TXT
+   (`resend._domainkey…`) plus SPF TXT + MX on the `send.` subdomain
+   (custom return-path) — at whichever DNS host serves fluensys.co.uk
+   (the registrar's panel unless nameservers were moved).
+3. Wait for the dashboard to show **Verified** (usually minutes).
+4. Recommended: add DMARC — TXT `_dmarc.fluensys.co.uk` →
+   `v=DMARC1; p=none; rua=mailto:info@fluensys.co.uk` — monitor first,
+   tighten to `quarantine` once reports look clean. DKIM+SPF+DMARC
+   together satisfy Gmail/Yahoo bulk-sender requirements.
+5. `journal@` needs no mailbox to send. Create an alias/forward only if
+   replies matter, or set `reply_to: info@fluensys.co.uk` in the digest
+   sender when it's built.
+6. Mind the plan limits (free tier: 100 emails/day, 3,000/month) when
+   the subscriber list grows; digests batch per-topic, so size the plan
+   to list length × send frequency.

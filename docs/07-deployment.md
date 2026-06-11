@@ -16,16 +16,23 @@
 
 ## Firebase
 
-Provision per docs/05 §Setup. Rules deploys are manual
-(`firebase deploy --only firestore:rules`) and should accompany any PR that
-changes `firestore.rules`.
+Provision per docs/05 §Setup. Rules & index deploys are automated: the
+`firestore-deploy` workflow runs whenever `firestore.rules` or
+`firestore.indexes.json` change on `main` (manual fallback:
+`firebase deploy --only firestore` from any clone, or workflow dispatch).
 
 ## GitHub repository configuration
+
+All secrets below are **repository secrets** (Settings → Secrets and
+variables → Actions → Secrets tab → Repository secrets). Environment
+secrets/variables are unused — no workflow declares a deployment
+`environment:`, and nothing reads `${{ vars.* }}`.
 
 | Setting | Value |
 | --- | --- |
 | Secret `CLAUDE_ROUTINE_FIRE_URL` | the commission routine's API-trigger URL (docs/03 §Create the routines) |
 | Secret `CLAUDE_ROUTINE_TOKEN` | the commission routine's bearer token (shown once — store immediately) |
+| Secret `FIREBASE_SERVICE_ACCOUNT_KEY` | single-line service-account JSON; powers the `firestore-deploy` workflow |
 | Branch protection on `main` | require the CI check ("Validate, typecheck & build"); routines and humans both merge via PR |
 | `.github/routines/authors.json` | keep the commissioner allowlist current |
 
