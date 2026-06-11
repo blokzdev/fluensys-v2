@@ -93,17 +93,23 @@ export interface HomeContent {
   };
 }
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  position: string;
+  credentials: string;
+  years: string;
+  expertise: string;
+  specialisms: string[];
+  bio: string;
+  image: string;
+  linkedin: string;
+}
+
 export interface TeamContent {
   title: string;
   description: string;
-  members: Array<{
-    name: string;
-    position: string;
-    expertise: string;
-    bio: string;
-    image: string;
-    linkedin: string;
-  }>;
+  members: TeamMember[];
 }
 
 export interface ClientsContent {

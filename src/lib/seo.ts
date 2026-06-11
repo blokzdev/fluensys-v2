@@ -14,11 +14,14 @@ export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function organizationJsonLd(contact: {
-  email: string;
-  phone: string;
-  address: string;
-}) {
+export function organizationJsonLd(
+  contact: {
+    email: string;
+    phone: string;
+    address: string;
+  },
+  team?: Array<{ name: string; position: string; linkedin: string }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -47,6 +50,17 @@ export function organizationJsonLd(contact: {
       "Energy efficiency",
     ],
     sameAs: ["https://x.com/fluensys", "https://uk.linkedin.com/company/fluensys-ltd"],
+    ...(team && team.length > 0
+      ? {
+          employee: team.map((member) => ({
+            "@type": "Person",
+            name: member.name,
+            jobTitle: member.position,
+            url: member.linkedin || undefined,
+            worksFor: { "@id": `${SITE_URL}/#organization` },
+          })),
+        }
+      : {}),
   };
 }
 

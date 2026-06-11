@@ -28,7 +28,7 @@ export default function HomePage() {
   const testimonials = getTestimonials();
   const articles = getPublishedArticles().map(toSummary);
 
-  const jsonLd = [organizationJsonLd(company.contact), websiteJsonLd()];
+  const jsonLd = [organizationJsonLd(company.contact, team.members), websiteJsonLd()];
 
   return (
     <>
