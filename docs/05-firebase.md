@@ -88,3 +88,27 @@ Resend (`RESEND_API_KEY`), rendered from the same content lake (new
 articles since last digest, filtered by subscriber `topics[]`), triggered
 by a GitHub scheduled workflow using the Admin SDK to read subscribers.
 Include one-click unsubscribe (signed token link → deletes the doc).
+
+### Resend domain setup (one-time, prerequisite for sending)
+
+`journal@fluensys.co.uk` can only send once the domain is verified —
+until then Resend is sandboxed to `onboarding@resend.dev` and your own
+inbox.
+
+1. Resend dashboard → **Domains → Add Domain** → `fluensys.co.uk`,
+   region **EU (Ireland)** to match the UK audience.
+2. Add the DNS records Resend displays — a DKIM TXT
+   (`resend._domainkey…`) plus SPF TXT + MX on the `send.` subdomain
+   (custom return-path) — at whichever DNS host serves fluensys.co.uk
+   (the registrar's panel unless nameservers were moved).
+3. Wait for the dashboard to show **Verified** (usually minutes).
+4. Recommended: add DMARC — TXT `_dmarc.fluensys.co.uk` →
+   `v=DMARC1; p=none; rua=mailto:info@fluensys.co.uk` — monitor first,
+   tighten to `quarantine` once reports look clean. DKIM+SPF+DMARC
+   together satisfy Gmail/Yahoo bulk-sender requirements.
+5. `journal@` needs no mailbox to send. Create an alias/forward only if
+   replies matter, or set `reply_to: info@fluensys.co.uk` in the digest
+   sender when it's built.
+6. Mind the plan limits (free tier: 100 emails/day, 3,000/month) when
+   the subscriber list grows; digests batch per-topic, so size the plan
+   to list length × send frequency.
