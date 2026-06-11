@@ -118,3 +118,25 @@ inbox.
 6. Mind the plan limits (free tier: 100 emails/day, 3,000/month) when
    the subscriber list grows; digests batch per-topic, so size the plan
    to list length × send frequency.
+
+### Coexistence with company email (Microsoft 365) — do not break this
+
+Inbound/outbound **company** email (info@, team mailboxes) is Microsoft
+365, switched by the **apex MX**. Resend deliberately never touches the
+apex — its records live on the `send.` subdomain and a DKIM selector —
+so the two systems coexist. The required DNS layout (Cloudflare, all
+"DNS only"):
+
+| Type  | Name                 | Content                                          | Owner |
+| ----- | -------------------- | ------------------------------------------------ | ----- |
+| MX 0  | `@`                  | `fluensys-co-uk.mail.protection.outlook.com`     | M365 inbound — **never remove/replace** |
+| TXT   | `@`                  | `v=spf1 include:spf.protection.outlook.com include:soverin.net -all` | M365 (+legacy) sending |
+| CNAME | `autodiscover`       | `autodiscover.outlook.com`                       | M365 client setup |
+| MX 10 | `send`               | `feedback-smtp.eu-west-1.amazonses.com`          | Resend bounces |
+| TXT   | `send`               | `v=spf1 include:amazonses.com ~all`              | Resend SPF |
+| TXT   | `resend._domainkey`  | `p=…` (from Resend dashboard)                    | Resend DKIM |
+| TXT   | `_dmarc`             | `v=DMARC1; p=none; rua=mailto:rua@dmarc.brevo.com,mailto:info@fluensys.co.uk` | both senders |
+
+Lesson learned at migration: Cloudflare's zone import dropped the apex
+MX and `autodiscover` — after any nameserver/DNS change, verify against
+the record list in Microsoft 365 admin → Settings → Domains.
