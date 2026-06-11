@@ -1,0 +1,399 @@
+{
+  "hero": {
+    "eyebrow": "Independent UK Engineering Consultancy",
+    "title": "Pumping Systems Consultancy",
+    "subtitle": "Access to expertise and knowledge in fluid pumping for heavy industry and SMEs.",
+    "primaryCta": {
+      "label": "Explore Services",
+      "href": "#services"
+    },
+    "secondaryCta": {
+      "label": "Read the Journal",
+      "href": "/blog"
+    },
+    "stats": [
+      {
+        "value": "50+",
+        "label": "Years of combined pump & fluids expertise"
+      },
+      {
+        "value": "30+",
+        "label": "Diverse projects delivered worldwide"
+      },
+      {
+        "value": "ISO 9001",
+        "label": "Certified quality management (BSI)"
+      }
+    ],
+    "slides": [
+      {
+        "title": "Pumping Systems Consultancy",
+        "subtitle": "Access to Expertise and Knowledge in Fluid Pumping for Heavy Industry and SMEs",
+        "buttonText": "Explore Services",
+        "buttonHref": "#expertise",
+        "bgSrc": "/images/pumping-system-1-dark.jpg",
+        "bgAlt": "Illustration of advanced pumping systems showcasing Fluensys expertise",
+        "imageSrc": "/images/pumping-system-1-dark.jpg",
+        "imageAlt": "Illustration of advanced pumping systems showcasing Fluensys expertise",
+        "imageCaption": "Our advanced pumping systems provide efficient solutions for various industries",
+        "background": "from-[#2584C5] to-[#72BF44]"
+      },
+      {
+        "title": "Cost-Effective and Innovative Solutions",
+        "subtitle": "Cutting-edge Technology for Optimal Performance and Reliability",
+        "buttonText": "Learn More",
+        "buttonHref": "#services",
+        "bgSrc": "/images/industrial-pipes.jpg",
+        "bgAlt": "Visualization of optimal and innovative solutions and technologies",
+        "imageSrc": "/images/refurbishments-upgrades.jpg",
+        "imageAlt": "Visualization of optimal and innovative solutions and technologies",
+        "imageCaption": "Discover our range of optimal and innovative solutions for enhanced efficiency",
+        "background": "from-[#72BF44] to-[#2584C5]"
+      },
+      {
+        "title": "Net-Zero and ESG Strategies",
+        "subtitle": "Decarbonization and Sustainability Solutions for a Greener Future",
+        "buttonText": "Explore Solutions",
+        "buttonHref": "#services",
+        "bgSrc": "/images/fluensys-pipes-right.jpg",
+        "bgAlt": "Visualization of net-zero emissions solutions and renewable technologies",
+        "imageSrc": "/images/fluensys-pipes-right.jpg",
+        "imageAlt": "Visualization of net-zero emissions solutions and renewable technologies",
+        "imageCaption": "Empowering businesses with innovative net-zero emissions strategies",
+        "background": "from-[#4CAF50] to-[#2196F3]"
+      }
+    ]
+  },
+  "pillars": {
+    "title": "Our Services",
+    "subtitle": "Three ways we move your systems forward",
+    "requestServiceLabel": "Request Service",
+    "items": [
+      {
+        "id": "new-products",
+        "title": "Innovative Products",
+        "description": "We support our clients in innovating pumping products to achieve the target hydraulic performance and efficiency, while minimising their carbon footprint and material intensity.",
+        "icon": "new-products",
+        "color": "services-tab-one",
+        "badge": "INNOVATE",
+        "details": [
+          "New product development support",
+          "Hydraulic design - impeller/volute",
+          "CFD performance modelling & optimization",
+          "FEA analysis",
+          "Rotordynamic stability analysis",
+          "Energy, carbon and material intensity evaluation"
+        ]
+      },
+      {
+        "id": "operations",
+        "title": "Operations & System Debottlenecking",
+        "description": "We troubleshoot machinery and their systems to eliminate recurring failures and loss of performance. We identify opportunities to reduce energy intensity and carbon emissions, hence bringing down operating cost.",
+        "icon": "operations",
+        "color": "services-tab-three",
+        "badge": "OPTIMIZE",
+        "details": [
+          "Machinery troubleshooting",
+          "Performance Improvement",
+          "Root Cause Analysis - Mechanical seal & bearing failure",
+          "System audit, modelling & optimization"
+        ]
+      },
+      {
+        "id": "capital-projects",
+        "title": "Capital Projects",
+        "description": "We support capital projects and plant upgrades in selecting and implementing optimal pumping solutions, aligned to business and Net Zero Strategies.",
+        "icon": "refurbishments",
+        "color": "services-tab-two",
+        "badge": "MODERNIZE",
+        "details": [
+          "Equipment specification & selection",
+          "Bid engineering & vendor coordination",
+          "Plant upgrades",
+          "System modelling & optimization",
+          "Financial analysis",
+          "Environmental impact - LCA",
+          "Energy, carbon and material intensity evaluation"
+        ]
+      }
+    ]
+  },
+  "expertise": {
+    "title": "Our Expertise",
+    "subtitle": "Deep domain knowledge across machines, applications and techniques",
+    "filterInstructions": "Select category to filter  /  Deselect to view all",
+    "groups": [
+      {
+        "key": "rotatingEquipment",
+        "label": "Rotating Equipment",
+        "icon": "Rotate3D",
+        "items": [
+          {
+            "name": "Centrifugal Pumps",
+            "description": "Efficient fluid transfer using centrifugal force",
+            "subtypes": [
+              {
+                "name": "Single & M/Stage Centrifugal Pumps",
+                "description": "Low to high flow rate and pressure applications"
+              },
+              {
+                "name": "Submersible Pumps",
+                "description": "Centrifugal Pumps for submersible applications with easy maintenance"
+              },
+              {
+                "name": "Cryogenic Pumps",
+                "description": "Multi-stage centrifugal pump for pumping cryogenic liquids at extremely low temperatures"
+              },
+              {
+                "name": "Multiphase and Supercritical CO2 Pumps",
+                "description": "Designed for special applications"
+              }
+            ]
+          },
+          {
+            "name": "Positive Displacement",
+            "description": "Precise fluid transfer with consistent flow rate",
+            "subtypes": [
+              {
+                "name": "Reciprocating and Screw Pumps",
+                "description": "Low flow High-pressure and high viscosity applications with easy maintenance"
+              },
+              {
+                "name": "Regenerative Pumps",
+                "description": "For low flow, low viscosity and liquids near boiling point applications"
+              }
+            ]
+          },
+          {
+            "name": "Drivers & Turbines",
+            "description": "Power sources for rotating equipment",
+            "subtypes": [
+              {
+                "name": "Motors & Gas Turbines",
+                "description": "High-efficiency power drives for large and small applications"
+              },
+              {
+                "name": "Turbo Expanders",
+                "description": "Energy recovery from high-pressure gas streams"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "applications",
+        "label": "Applications",
+        "icon": "Waypoints",
+        "items": [
+          {
+            "name": "Process and Manufacturing Systems",
+            "description": "Municipal and industrial water management systems",
+            "subtypes": [
+              {
+                "name": "Water & Wastewater Systems",
+                "description": "Purification and distribution of potable water and treatment of wastewater"
+              },
+              {
+                "name": "Oil & Gas Systems",
+                "description": "Pumping extracted oil, condensate and treatment fluids in oil & gas production, petrochemical and refinery plants"
+              },
+              {
+                "name": "Chemical & Process Plants",
+                "description": "Pumping of hazardous and non-hazardous fluids in production plants"
+              },
+              {
+                "name": "Cooling & Lubrication Systems",
+                "description": "Providing heat recovery and adequate machinery lubrication in systems"
+              }
+            ]
+          },
+          {
+            "name": "Power Generation",
+            "description": "Critical pumps for conventional and nuclear power plants",
+            "subtypes": [
+              {
+                "name": "Boiler Feed & Condensate Recovery",
+                "description": "High-pressure pumps for steam generation systems"
+              },
+              {
+                "name": "Energy Recovery",
+                "description": "Use of pumps as turbines for recovering energy"
+              }
+            ]
+          },
+          {
+            "name": "Renewables",
+            "description": "Pumping solutions for sustainable energy production",
+            "subtypes": [
+              {
+                "name": "Geothermal",
+                "description": "High-temperature pumps for geothermal wells"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "techniques",
+        "label": "Techniques",
+        "icon": "DraftingCompass",
+        "items": [
+          {
+            "name": "System Design & Optimization",
+            "description": "Optimizing overall system performance and efficiency",
+            "subtypes": [
+              {
+                "name": "Mechanical & Hydraulic Design",
+                "description": "Calculations and Sizing of pumps and ancillaries using in-house proprietary tools"
+              },
+              {
+                "name": "System Modelling & Optimization",
+                "description": "Performance validation and Optimization of Process System"
+              },
+              {
+                "name": "CFD & Flow Visualization",
+                "description": "Hydraulic performance validation and Optimization"
+              }
+            ]
+          },
+          {
+            "name": "Design Audit",
+            "description": "Ensuring structural integrity and reliability",
+            "subtypes": [
+              {
+                "name": "Mechanical & Process Audits",
+                "description": "Validation of system design and performance under current operating conditions"
+              },
+              {
+                "name": "Operational Performance Review",
+                "description": "Verification of pump selection and system performance under current operating conditions"
+              },
+              {
+                "name": "Root Cause Analysis",
+                "description": "Troubleshooting of pump reliability issues"
+              }
+            ]
+          },
+          {
+            "name": "Economic and Environmental Impact",
+            "description": "Assessing financial viability of projects and solutions",
+            "subtypes": [
+              {
+                "name": "Financial Analysis",
+                "description": "Evaluating NPV, ROI and payback of investment in equipment and system"
+              },
+              {
+                "name": "Carbon Emissions & Life Cycle Analysis ",
+                "description": "Evaluation of Carbon Emissions, Energy and material impact for proposed solutions"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "consultancy": {
+    "title": "Consultancy",
+    "subtitle": "Explore our range of consultancy services",
+    "categories": [
+      {
+        "title": "DESIGN & AUDIT",
+        "icon": "Lightbulb",
+        "items": [
+          "Pump Specification, Selection and Vendor Liaison",
+          "Impeller & Volute Design",
+          "CFD Analysis",
+          "Pump Re-Rating (Change of duty)",
+          "Process Simulation (Start-Up/Shutdown/Upsets)",
+          "Witness Testing (FAT/SAT) – ISO 9906/HI/API 610"
+        ]
+      },
+      {
+        "title": "OPERATIONS",
+        "icon": "BarChart2",
+        "items": [
+          "Plant Operational Review",
+          "Off-design Operation Analysis",
+          "Dynamic Simulation Analysis (System trip)",
+          "Vibration and Noise Troubleshooting",
+          "Seal Failure Troubleshooting"
+        ]
+      },
+      {
+        "title": "PROJECTS",
+        "icon": "Wrench",
+        "items": [
+          "Concept Studies",
+          "Performance, Reliability Improvement & Upgrades",
+          "Risk Analysis, Adaptation & Mitigation Plans",
+          "New Product Development",
+          "Innovation Research & Technical Advisory",
+          "Forensics Investigation"
+        ]
+      },
+      {
+        "title": "TRAINING",
+        "icon": "Cpu",
+        "items": [
+          "Pump Technology",
+          "Pumping System Design & Operation"
+        ]
+      }
+    ]
+  },
+  "about": {
+    "title": "About Fluensys",
+    "description": "We are an independent engineering consultancy firm based in Central London, UK. With more than 50 years of Pump & Fluids expertise, we deliver practical, tailor-made solutions to small- and medium-sized businesses.",
+    "values": [
+      {
+        "text": "Honesty",
+        "color": {
+          "light": "#72BF44",
+          "dark": "#2584C5"
+        }
+      },
+      {
+        "text": "Integrity",
+        "color": {
+          "light": "#72BF44",
+          "dark": "#2584C5"
+        }
+      },
+      {
+        "text": "Responsibility",
+        "color": {
+          "light": "#72BF44",
+          "dark": "#2584C5"
+        }
+      }
+    ],
+    "keyPoints": [
+      "Practical solutions",
+      "Tailor-made approach",
+      "50+ years of expertise"
+    ],
+    "certificationBadges": [
+      {
+        "src": "/images/certification-bpma.jpeg",
+        "alt": "Member of the British Pump Manufacturers Association",
+        "url": "http://www.bpma.org.uk/member-details/5892fd32ab968/Fluid-Energy-Solutions-Consultancy-Ltd"
+      },
+      {
+        "src": "/images/certification-iso.webp",
+        "alt": "ISO 9001:2015 Certified by BSI Assurance",
+        "url": "https://www.bsigroup.com/en-gb/bsi-assurance/accreditation/accredited-organisations/accredited-organisations-list/fluid-energy-solutions-consultancy-ltd/"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to get started?",
+    "subtitle": "Contact us today to learn more about our services.",
+    "buttonText": "Get in Touch"
+  },
+  "blogPromo": {
+    "title": "The FluenSys Journal",
+    "subtitle": "Field-tested insight on pumping systems, reliability, automation and the road to Net Zero — written by practising consultants.",
+    "latestPostsButtonText": "Latest Articles",
+    "subscribeButtonText": "Subscribe"
+  }
+}

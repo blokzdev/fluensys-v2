@@ -1,0 +1,30 @@
+{
+  "title": "Meet Our Team",
+  "description": "Our consultants draw on their combined 50+ years of Pump & Fluids expertise to develop the most practical, tailor-made solutions for your small- or medium-sized business.",
+  "members": [
+    {
+      "name": "Dr. Jean-Noel Bajeet",
+      "position": "Lead Consultant",
+      "expertise": "Turbomachines & Power systems, Renewables",
+      "bio": "Jean-Noel holds an MBA, a PhD in Fluid Dynamics and Turbomachinery and has over 15 years of experience in the pump industry. A specialist in submersible pump design, testing and selection, he has acquired extensive expertise in Water and Wastewater applications, solids handling and abrasive media applications such as sand pumping. He also has experience in Oil & Gas pumping systems (Main Oil Line) and debottlenecking, having supported BP on operations and troubleshooting.",
+      "image": "/images/team/jean-noel-bajeet-fluensys.jpg",
+      "linkedin": "https://uk.linkedin.com/in/jnbajeet"
+    },
+    {
+      "name": "David Cullen",
+      "position": "Associate Consultant",
+      "expertise": "Turbomachines & Power Systems, Cryogenics",
+      "bio": "David has over 40 years of experience working with pumps and pumping systems. A cryogenic (LNG) pump design and selection specialist, he acts as Associate Consultant with Fluensys. Over the years, he has provided consulting services to major companies such as BP and TGE Marine in various sectors including Water, Oil & Gas, LNG and Marine. David avails of a wide experience and knowledge on cryogenic pump applications acquired through LNG projects carried out across the globe.",
+      "image": "/images/team/david-cullen-fluensys.jpeg",
+      "linkedin": "https://uk.linkedin.com/in/david-cullen-88821727"
+    },
+    {
+      "name": "Sabbir Mahmood",
+      "position": "Lead Process Engineer",
+      "expertise": "Systems Control, Energy Conversion & Fuels",
+      "bio": "Sabbir holds a Master's Degree in Chemical Engineering from Imperial College and has over 8 years experience in the oil and gas industry. He is specialized in control systems analysis and dynamic simulations. He has worked extensively on the process design audit and troubleshooting/debottlenecking of compression, pumping and LNG systems. He is experienced in process modelling of system start-up, shutdown, and ESD, with over 30 diverse projects under his belt.",
+      "image": "/images/team/sabbir-mahmood-fluensys.jpeg",
+      "linkedin": "https://www.linkedin.com/in/sabbir-mahmood-93225bb4"
+    }
+  ]
+}

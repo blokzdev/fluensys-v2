@@ -1,0 +1,86 @@
+name: "📝 Commission an Article"
+description: Commission a new Journal article — from a topic brief or a pre-authored PDF.
+title: "[Commission]: "
+labels: ["commission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Commission a FluenSys Journal article
+        Only authorized authors (listed in `.github/routines/authors.json`) can trigger the
+        authoring routine. Submissions from other accounts are politely ignored by CI.
+
+        **Two modes:**
+        1. **Brief only** — describe the topic; the routine researches, writes the article,
+           creates figures/charts, and authors the downloadable PDF.
+        2. **Pre-authored PDF** — attach your PDF below; the routine formulates the web
+           article *from* it and attaches your PDF as the downloadable full version.
+  - type: input
+    id: working-title
+    attributes:
+      label: Working title
+      description: A descriptive working title (the routine may refine it for SEO).
+      placeholder: "e.g. Selecting mechanical seals for high-temperature duty"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Must be one of the categories in content/taxonomy/categories.json.
+      options:
+        - troubleshooting
+        - automation
+        - net-zero
+        - design
+        - operations
+    validations:
+      required: true
+  - type: textarea
+    id: brief
+    attributes:
+      label: Brief / key points
+      description: |
+        What should the article cover? Target audience, key takeaways, case-study data,
+        figures you want, standards to reference, etc. The more actionable, the better.
+      placeholder: |
+        - Audience: plant reliability engineers
+        - Cover: seal selection criteria, API 682 plans, failure modes
+        - Include a comparison table and one chart
+    validations:
+      required: true
+  - type: input
+    id: tags
+    attributes:
+      label: Tags
+      description: 2–6 kebab-case tags, comma-separated.
+      placeholder: "mechanical-seals, reliability, api-682"
+    validations:
+      required: true
+  - type: textarea
+    id: pdf
+    attributes:
+      label: Pre-authored PDF (optional)
+      description: |
+        Drag & drop your PDF here if you are commissioning from a finished document.
+        Leave empty to have the routine author the PDF as well.
+      placeholder: "Attach a .pdf file by dragging it into this field."
+  - type: dropdown
+    id: author
+    attributes:
+      label: Credited author
+      description: Author profile to credit (content/authors/*.json). New profiles can be requested in the brief.
+      options:
+        - jean-noel-bajeet
+        - david-cullen
+        - sabbir-mahmood
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - normal
+        - high
+      default: 0

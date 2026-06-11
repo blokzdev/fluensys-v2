@@ -1,0 +1,91 @@
+---
+title: "Using Dynamic Modelling to Troubleshoot Pumping System Trip"
+slug: using-dynamic-modelling-to-troubleshoot-pumping-system-trip
+status: published
+category: troubleshooting
+tags:
+  - dynamic-modelling
+  - troubleshooting
+  - pumps
+  - system-trip
+  - oil-and-gas
+authors:
+  - jean-noel-bajeet
+contributors:
+  - name: "Sabbir Mahmood"
+    role: "Lead Process Consultant"
+  - name: "Jean-Noel Bajeet"
+    role: "Lead Mechanical Consultant"
+publishedAt: 2024-08-21
+updatedAt: 2024-08-21
+excerpt: "This case study demonstrates how transient dynamic modelling can provide useful insight into operational issues, resolving recurring start-up trips on a 6.9 MW crude oil pumping system in the North Sea."
+featuredImage: using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image1.jpg
+featuredImageAlt: "Crude oil pumping system on a North Sea processing platform"
+readingTime: 8
+pdf: using-dynamic-modelling-to-troubleshoot-pumping-system-trip.pdf
+disclaimer: "While every effort has been made to present a comprehensive overview of best practices for modelling and troubleshooting process systems, Fluensys does not claim that this technique applies to every problem and reserves the right to adjust their technical opinion to reflect latest practices, technologies, and system characteristics."
+revision: 1
+legacy:
+  v1Path: /blog/troubleshooting/using-dynamic-modelling-to-troubleshoot-pumping-system-trip
+  v1PdfPath: /blogfiles/2024/08/using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1.pdf
+---
+
+Dynamic modelling is a powerful tool for troubleshooting complex operational issues in pumping systems. This case study illustrates how it can be used to identify and resolve recurring start-up trips, leading to improved system reliability and reduced downtime.
+
+## Background
+
+Recurring trips on a 6.9 MW motor-driven multistage barrel type centrifugal pump were causing severe outages on a North Sea (UK) crude oil processing platform. Plant shutdowns sometimes lasted a full day or more, resulting in significant production losses. The pump tripped on high suction pressure during start-up, despite a seemingly large margin between the trip set point (30 barg) and normal operating suction pressure (20 barg).
+
+<Figure src="using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image1.jpg" alt="Crude Pumping System" caption="Figure 1: Crude Pumping System" />
+
+## Dynamic Modelling Approach
+
+Using HYSYS v7.2 for dynamic modelling, the crude pumping system start-up was simulated to scrutinize its transient behavior and monitor changes in key operational parameters.
+
+<Figure src="using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image2.jpg" alt="System Modelling for Low Cv Min Flow FCV" caption="Figure 2: System Modelling for Low Cv Min Flow FCV (Cv = 55)" />
+
+<Figure src="using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image3.jpg" alt="System Modelling for Higher Cv Min Flow FCV" caption="Figure 3: System Modelling for Higher Cv Min Flow FCV (Cv = 100)" />
+
+## Key Findings
+
+  1. The analysis confirmed a large transient rise in suction pressure during start-up, causing the pump and system to trip.
+  2. The root cause was identified as the recycle valve being too small (Cv = 55) to match the pump work during ramp-up.
+  3. Iterative simulations with larger Cv valves showed that a Cv of 100 was sufficient to avoid trips and provide a minimum 10% margin from the trip setpoint.
+
+<Figure src="using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image4.jpg" alt="Effect of Recycle Valve CV on Pump Start-Up" caption="Figure 4: Effect of Recycle Valve CV on Pump Start-Up" />
+
+## System Behavior Analysis
+
+The behavior of a pumping system during transient phases is complex, influenced by:
+
+  * Hardware interactions
+  * Control system design and settings
+  * Defined operating procedures
+
+<Figure src="using-dynamic-modelling-to-troubleshoot-pumping-system-trip-rev1_image5.jpg" alt="Valve Pressure Drop vs Flow" caption="Figure 5: Valve Pressure drop vs flow" />
+
+## Why This Matters
+
+Understanding and resolving transient operational issues in pumping systems is crucial for:
+
+  * Minimizing production losses due to unplanned shutdowns
+  * Improving overall system reliability and efficiency
+  * Optimizing equipment performance and lifespan
+  * Reducing maintenance costs and downtime
+
+## Did You Know?
+
+  * Transient analysis can reveal issues that steady-state analysis might miss, especially in complex systems.
+  * Proper sizing of recycle valves is critical for system stability during start-up and other transient operations.
+  * Dynamic modelling can save significant time and resources compared to trial-and-error approaches in the field.
+
+## Further Reading
+
+For more information on dynamic modelling and its applications in process engineering:
+
+  1. [AspenTech - Dynamic Modeling](https://www.aspentech.com/en/products/engineering/aspen-hysys)
+  2. [AIChE - Process Simulation and Modeling](https://www.aiche.org/resources/publications/cep/2018/may/process-simulation-and-modeling)
+
+## Conclusions
+
+The problem on the crude oil pumping system was solved by installing a larger Cv recycle valve, restoring system availability. This case demonstrates how dynamic modelling can help troubleshoot pumping systems and provides deeper insight into the role of each key component.

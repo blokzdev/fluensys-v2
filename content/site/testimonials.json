@@ -1,0 +1,29 @@
+{
+  "title": "What they say",
+  "items": [
+    {
+      "id": 1,
+      "quote": "Thanks a million for your visits over the last two weeks. Our Engineers got all they wanted on the pump design and more from discussions. You have given us new energy to tackle this important area.",
+      "author": "Technical Director",
+      "company": "Sulzer (Ireland)",
+      "project": "Training course carried out on Centrifugal Pumps",
+      "year": 2017
+    },
+    {
+      "id": 2,
+      "quote": "Many thanks for preparing and delivering the training course for our operational team.",
+      "author": "Senior RE Engineer",
+      "company": "Repsol Sinopec (UK)",
+      "project": "Training delivered on Pumping Modules for Claymore Asset",
+      "year": 2014
+    },
+    {
+      "id": 3,
+      "quote": "Thanks for the intellectual rigour in producing a highly effective support for us.",
+      "author": "VP, Head of Innovation & Marketing",
+      "company": "Aqualisa (UK)",
+      "project": "Consultancy support provided for Pump System design",
+      "year": 2016
+    }
+  ]
+}

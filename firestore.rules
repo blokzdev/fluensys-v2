@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// FluenSys Firestore security rules.
+// Deploy with: firebase deploy --only firestore:rules
+// See docs/05-firebase.md for the data model.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // ---------------------------------------------------------- users
+    match /users/{uid} {
+      allow read, write: if isOwner(uid);
+
+      // Saved articles. Document id is the article slug.
+      match /bookmarks/{articleSlug} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // ---------------------------------------------------------- comments
+    // Public professional discussion under each article.
+    match /articles/{articleSlug}/comments/{commentId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.body is string
+        && request.resource.data.body.size() >= 2
+        && request.resource.data.body.size() <= 2000
+        && request.resource.data.keys().hasOnly(
+             ['uid', 'displayName', 'photoURL', 'body', 'createdAt']);
+      // Authors may delete their own comments; edits are not allowed
+      // (delete and repost) to keep threads honest.
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+
+    // ---------------------------------------------------------- newsletter
+    // Lead-gen subscriptions. Creation/update requires an auth session
+    // (anonymous guest sessions are provisioned transparently by the form).
+    // Reading the subscriber list is admin/console only.
+    match /newsletterSubscribers/{subscriberId} {
+      allow read: if false;
+      allow create, update: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email is string
+        && request.resource.data.email == subscriberId
+        && request.resource.data.email.matches('.+@.+\\..+')
+        && request.resource.data.consent == true
+        && request.resource.data.keys().hasOnly(
+             ['uid', 'email', 'firstName', 'topics', 'consent', 'source', 'createdAt']);
+      allow delete: if false;
+    }
+
+    // Default deny.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

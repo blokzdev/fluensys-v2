@@ -1,0 +1,62 @@
+name: "Routine: Scheduled Article"
+
+# Periodic editorial routine: proposes and authors a new Journal article on a
+# topic chosen from docs/editorial-backlog.md (or, if empty, from gaps in the
+# existing taxonomy coverage). Disabled until the repository variable
+# ENABLE_SCHEDULED_ARTICLES is set to 'true'.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Optional topic override"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  author-article:
+    if: vars.ENABLE_SCHEDULED_ARTICLES == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run authoring routine
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            You are the FluenSys Journal scheduled authoring routine.
+
+            Read and follow docs/03-routines.md EXACTLY — it is the authoring
+            contract (folder layout, frontmatter schema, figure/chart components,
+            PDF rules, validation, PR conventions).
+
+            Topic selection:
+            - Topic override (may be empty): "${{ inputs.topic }}"
+            - Otherwise take the topmost unchecked item from docs/editorial-backlog.md
+              (tick it off in the same PR).
+            - If the backlog is empty, choose a high-value topic that fills a gap in
+              the current category/tag coverage of content/articles/.
+
+            Author the full article (body, figures/charts where they add value) AND
+            generate the downloadable PDF via scripts/generate-pdf.mjs. Validate with
+            `npm run content:validate`, ensure `npm run build` passes, then open a PR
+            titled "content: <article title> (scheduled)".
+          claude_args: "--allowedTools Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch --max-turns 120"

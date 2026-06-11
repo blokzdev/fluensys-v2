@@ -1,0 +1,21 @@
+FluenSys website platform
+Copyright 2024-2026 Fluensys Limited
+
+This repository uses a split licensing model:
+
+  1. SOURCE CODE (everything outside /content and /public/images) is
+     licensed under the Apache License, Version 2.0 — see LICENSE.
+
+  2. CONTENT AND BRAND ASSETS are NOT covered by the Apache License.
+     All articles, figures, downloadable PDFs, photography, client logos,
+     team imagery, certification marks and the FluenSys name/branding
+     (in /content, /public/images and /public/blogfiles) are
+     © Fluensys Limited or their respective owners, all rights reserved —
+     see content/LICENSE.md.
+
+"FluenSys" and "Fluensys" are trade names of Fluensys Limited. Nothing in
+this repository grants permission to use them in a way that suggests
+endorsement or affiliation.
+
+Third-party client logos appear with permission for the purpose of the
+FluenSys website only and remain the property of their respective owners.

@@ -1,0 +1,6 @@
+{
+  "$comment": "GitHub usernames authorized to trigger authoring routines (commission issues). The commission workflow refuses issues opened by anyone not listed here.",
+  "authorizedAuthors": [
+    "blokzdev"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "FluenSys",
+  "legalName": "Fluensys Limited",
+  "tagline": "Pumping Systems Consultancy",
+  "strapline": "Access to Expertise and Knowledge in Fluid Pumping for Heavy Industry and SMEs",
+  "description": "Fluensys is an independent engineering consultancy in Central London, specializing in fluid and energy solutions. With over 50 years of combined expertise, we deliver practical, tailor-made solutions for SMEs. Our services include new product development, refurbishments, operations optimization, and specialized training. We're committed to honesty, integrity, and responsibility, providing innovative solutions across water treatment, oil & gas, chemical processing, and renewable energy sectors.",
+  "foundingStatement": "We are an independent engineering consultancy firm based in Central London, UK. With more than 50 years of Pump & Fluids expertise, we deliver practical, tailor-made solutions to small- and medium-sized businesses.",
+  "values": [
+    "Honesty",
+    "Integrity",
+    "Responsibility"
+  ],
+  "keyPoints": [
+    "Practical solutions",
+    "Tailor-made approach",
+    "50+ years of expertise"
+  ],
+  "contact": {
+    "email": "info@fluensys.co.uk",
+    "phone": "+44 (0) 207 101 3911",
+    "address": "35 Westcliffe House, Central London, N1 3HS"
+  },
+  "social": {
+    "x": "https://x.com/fluensys",
+    "linkedin": "https://uk.linkedin.com/company/fluensys-ltd"
+  },
+  "certifications": [
+    {
+      "title": "Member of the British Pump Manufacturers Association",
+      "image": "/images/certification-bpma.jpeg",
+      "url": "http://www.bpma.org.uk/member-details/5892fd32ab968/Fluid-Energy-Solutions-Consultancy-Ltd"
+    },
+    {
+      "title": "ISO 9001:2015 Certified by BSI Assurance",
+      "image": "/images/certification-iso.webp",
+      "url": "https://www.bsigroup.com/en-gb/bsi-assurance/accreditation/accredited-organisations/accredited-organisations-list/fluid-energy-solutions-consultancy-ltd/"
+    }
+  ]
+}

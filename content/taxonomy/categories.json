@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "id": "troubleshooting",
+      "title": "Troubleshooting",
+      "description": "Root cause analysis, failure investigation and field-proven fixes for pumps and pumping systems — from bearing and seal failures to transient trips.",
+      "accent": "azure"
+    },
+    {
+      "id": "automation",
+      "title": "Automation",
+      "description": "Control, instrumentation and drive technologies for pumping systems: VFDs, control philosophies, monitoring and smart operation.",
+      "accent": "green"
+    },
+    {
+      "id": "net-zero",
+      "title": "Net Zero",
+      "description": "Decarbonization strategies, energy-intensity reduction and ESG-aligned engineering for process plants and rotating machinery.",
+      "accent": "emerald"
+    },
+    {
+      "id": "design",
+      "title": "Design & Selection",
+      "description": "Hydraulic design, CFD, equipment specification and selection — getting the right machine for the duty, first time.",
+      "accent": "violet"
+    },
+    {
+      "id": "operations",
+      "title": "Operations",
+      "description": "Operational excellence for pumping systems: performance monitoring, audits, debottlenecking and reliability engineering.",
+      "accent": "amber"
+    }
+  ]
+}

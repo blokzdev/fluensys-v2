@@ -1,0 +1,46 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# generated content artifacts (rebuilt from /content by `npm run content:build`)
+/public/blogfiles/
+/public/search-index.json
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files — never commit secrets; use .env.example as the template
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# playwright (only installed on demand for PDF generation)
+/playwright-report/
+/test-results/

@@ -1,0 +1,89 @@
+{
+  "title": "Our Clients",
+  "items": [
+    {
+      "name": "Sulzer",
+      "logo": "/images/clients/sulzer.svg",
+      "industry": "Industrial Engineering",
+      "description": "Sulzer is a global leader in fluid engineering, specializing in pumping, agitation, mixing, separation and application technologies.",
+      "website": "https://www.sulzer.com/"
+    },
+    {
+      "name": "Repsol Sinopec",
+      "logo": "/images/clients/repsol_sinopec.png",
+      "industry": "Oil and Gas",
+      "description": "Repsol Sinopec Resources UK is an oil and gas exploration and production company operating in the UK North Sea.",
+      "website": "https://www.repsolsinopecuk.com/"
+    },
+    {
+      "name": "Cox Marine",
+      "logo": "/images/clients/cox_marine.svg",
+      "industry": "Marine Engineering",
+      "description": "Cox Marine is a leading manufacturer of high-powered diesel outboard engines for commercial, government, and military applications.",
+      "website": "https://www.coxmarine.com/"
+    },
+    {
+      "name": "BG Group",
+      "logo": "/images/clients/bg_group.png",
+      "industry": "Oil and Gas",
+      "description": "BG Group was a British multinational oil and gas company acquired by Royal Dutch Shell in 2016.",
+      "website": "https://www.shell.com/"
+    },
+    {
+      "name": "Staatsolie",
+      "logo": "/images/clients/staatsolie.png",
+      "industry": "Oil and Gas",
+      "description": "Staatsolie is the state-owned oil company of Suriname, involved in exploration, production, refining, and marketing of oil products.",
+      "website": "https://www.staatsolie.com/en/"
+    },
+    {
+      "name": "The Bristol Port Company",
+      "logo": "/images/clients/bristol_port_company.png",
+      "industry": "Shipping and Logistics",
+      "description": "The Bristol Port Company operates the commercial seaport of Bristol, England, handling various types of cargo and cruise ships.",
+      "website": "https://www.bristolport.co.uk/"
+    },
+    {
+      "name": "Takreer",
+      "logo": "/images/clients/takreer.png",
+      "industry": "Oil and Gas",
+      "description": "Takreer, now part of ADNOC Refining, is a leading refining company in the UAE, processing crude oil and condensate.",
+      "website": "https://www.adnoc.ae/en/adnoc-refining"
+    },
+    {
+      "name": "Matthews Daniel",
+      "logo": "/images/clients/matthews_daniel.png",
+      "industry": "Marine Insurance",
+      "description": "Matthews Daniel is a global marine insurance consultancy firm, providing surveying and adjusting services to the maritime industry.",
+      "website": "https://www.matthewsdaniel.com/"
+    },
+    {
+      "name": "KBR",
+      "logo": "/images/clients/kbr.png",
+      "industry": "Engineering and Construction",
+      "description": "KBR is a global engineering, procurement, and construction company, serving the aerospace, defense, and energy sectors.",
+      "website": "https://www.kbr.com/"
+    },
+    {
+      "name": "BP",
+      "logo": "/images/clients/bp.png",
+      "industry": "Oil and Gas",
+      "description": "BP is one of the world's leading integrated oil and gas companies, providing fuel, energy, and petrochemical products.",
+      "website": "https://www.bp.com/"
+    },
+    {
+      "name": "Aqualisa",
+      "logo": "/images/clients/aqualisa.svg",
+      "industry": "Plumbing and Heating",
+      "description": "Aqualisa is a UK-based manufacturer of premium showers and smart digital showers, known for innovation in bathroom technology.",
+      "website": "https://www.aqualisa.co.uk/"
+    },
+    {
+      "name": "Thames Water",
+      "logo": "/images/clients/thames_water.png",
+      "industry": "Water Utility",
+      "description": "Thames Water is the UK's largest water and wastewater services company, serving London and the Thames Valley region.",
+      "website": "https://www.thameswater.co.uk/"
+    }
+  ]
+}

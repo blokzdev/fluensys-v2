@@ -1,0 +1,92 @@
+name: "Routine: Commission Article"
+
+# Triggered when an authorized author opens (or labels) a commission issue.
+# The routine authors a complete article folder in the content lake and
+# opens a PR for review. See docs/03-routines.md for the full contract.
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: commission-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  authorize:
+    name: Check author allowlist
+    if: contains(github.event.issue.labels.*.name, 'commission')
+    runs-on: ubuntu-latest
+    outputs:
+      authorized: ${{ steps.check.outputs.authorized }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check allowlist
+        id: check
+        env:
+          ACTOR: ${{ github.event.issue.user.login }}
+        run: |
+          if jq -e --arg actor "$ACTOR" '.authorizedAuthors | index($actor)' .github/routines/authors.json > /dev/null; then
+            echo "authorized=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "authorized=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::@$ACTOR is not in .github/routines/authors.json — commission ignored."
+          fi
+
+  author-article:
+    name: Author the article
+    needs: authorize
+    if: needs.authorize.outputs.authorized == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run authoring routine
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            You are the FluenSys Journal authoring routine, commissioned via GitHub
+            issue #${{ github.event.issue.number }}.
+
+            Read and follow docs/03-routines.md EXACTLY — it is the authoring
+            contract (folder layout, frontmatter schema, figure/chart components,
+            PDF rules, validation, PR conventions).
+
+            Commission details (from the issue):
+            ---
+            Title: ${{ github.event.issue.title }}
+            Body:
+            ${{ github.event.issue.body }}
+            ---
+
+            Key rules:
+            1. If the issue includes an attached PDF URL, download it, formulate the
+               web article FROM that document, and store the PDF as
+               downloads/<slug>.pdf — set commission.providedPdf: true.
+            2. If no PDF is attached, author the article from the brief AND generate
+               the downloadable PDF using scripts/generate-pdf.mjs (build + start the
+               site first; install playwright on demand as documented in the script).
+            3. Validate with `npm run content:validate` and ensure `npm run build`
+               passes before opening the PR.
+            4. Open a PR titled "content: <article title> (#${{ github.event.issue.number }})"
+               that closes issue #${{ github.event.issue.number }}, summarising what
+               was authored and any editorial decisions.
+          claude_args: "--allowedTools Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch --max-turns 120"
