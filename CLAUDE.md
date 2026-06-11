@@ -84,7 +84,7 @@ src/lib/firebase/         # lazy client, db helpers
 src/lib/seo.ts            # site constants + JSON-LD builders
 src/components/           # home/ blog/ mdx/ motion/ three/ layout/ ui/ auth/ providers/
 src/app/                  # routes (/, /blog, /blog/[category], /blog/[category]/[slug], print, feed.xml, sitemap, robots)
-.github/workflows/        # ci + commission dispatch (fires the Claude routine)
+.github/workflows/        # ci + commission dispatch + firestore auto-deploy
 .github/routines/         # commissioner allowlist + versioned routine prompts
 firestore.rules           # security rules — review on any Firestore change
 ```

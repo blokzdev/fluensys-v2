@@ -24,12 +24,27 @@ priorities, not strict gates.
 
 ## Phase 1 — Launch readiness
 
+- [x] Provision Firebase project (`fluensys-2026`: Google + Anonymous
+      auth, Firestore, `.firebaserc` committed) and set Vercel env vars
+      (Firebase web config, `FIREBASE_SERVICE_ACCOUNT_KEY`,
+      `RESEND_API_KEY`)
+- [x] Vercel project connected to the repo (preview deploys on PRs)
+- [ ] Wire the `firestore-deploy` workflow: grant the service account
+      `roles/firebase.admin` in IAM, add `FIREBASE_SERVICE_ACCOUNT_KEY`
+      as a **repository secret**, then run the workflow once to green
 - [ ] Create the two Claude Code routines at claude.ai/code/routines
-      (commission: API trigger → repo secrets `CLAUDE_ROUTINE_FIRE_URL` +
-      `CLAUDE_ROUTINE_TOKEN`; scheduled: weekly) per docs/03 §Create the
-      routines, then dry-run a commission issue end-to-end
-- [ ] Provision Firebase project + deploy rules; set Vercel env vars
-- [ ] Vercel project + domain cutover (www.fluensys.co.uk)
+      (commission: API trigger → repository secrets
+      `CLAUDE_ROUTINE_FIRE_URL` + `CLAUDE_ROUTINE_TOKEN`; scheduled:
+      weekly) per docs/03 §Create the routines, then dry-run a commission
+      issue end-to-end
+- [ ] Verify Firebase features on a production deploy (Google sign-in
+      popup, bookmark, comment, newsletter subscribe; add the Vercel and
+      fluensys.co.uk domains to Firebase Authorized domains if
+      `auth/unauthorized-domain` appears)
+- [ ] Resend domain verification for journal@fluensys.co.uk
+      (DKIM/SPF/DMARC — runbook in docs/05 §Resend domain setup)
+- [ ] Domain cutover (www.fluensys.co.uk → Vercel) + production smoke
+      test (/sitemap.xml, /feed.xml, legacy PDF redirects)
 - [ ] Google Search Console + Bing verification, sitemap submission
 - [ ] Visual QA pass on real devices (360px → 4K); Lighthouse ≥ 95 across
       the board; tune hero particle count on low-end mobile

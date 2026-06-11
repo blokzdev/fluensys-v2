@@ -23,6 +23,11 @@ Provision per docs/05 §Setup. Rules & index deploys are automated: the
 
 ## GitHub repository configuration
 
+All secrets below are **repository secrets** (Settings → Secrets and
+variables → Actions → Secrets tab → Repository secrets). Environment
+secrets/variables are unused — no workflow declares a deployment
+`environment:`, and nothing reads `${{ vars.* }}`.
+
 | Setting | Value |
 | --- | --- |
 | Secret `CLAUDE_ROUTINE_FIRE_URL` | the commission routine's API-trigger URL (docs/03 §Create the routines) |

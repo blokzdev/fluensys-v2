@@ -38,9 +38,10 @@ live routines to match (and vice versa).
    the prompt from `.github/routines/commission-routine.md`, pick a strong
    model (Opus-class), Default environment.
 2. Trigger: **API** → save → copy the fire URL and generate the token
-   (shown once). Add both as repo secrets:
+   (shown once). Add both as **repository secrets** —
    `CLAUDE_ROUTINE_FIRE_URL` and `CLAUDE_ROUTINE_TOKEN`
-   (Settings → Secrets and variables → Actions).
+   (Settings → Secrets and variables → Actions → Secrets tab →
+   Repository secrets; not environment secrets, not variables).
 3. **Connectors**: remove all of them — the routine needs only the repo,
    shell and web access. (Connectors run with write access and no
    approval prompts; least privilege applies.)
