@@ -200,6 +200,18 @@ section[id] {
   bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
+/* Horizontally scrolling filter-chip rail on small screens */
+@media (max-width: 48rem) {
+  .chip-rail {
+    scrollbar-width: none;
+    mask-image: linear-gradient(90deg, black 92%, transparent);
+  }
+
+  .chip-rail::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Engineering blueprint grid backdrop */
 @utility bg-blueprint {
   background-image:
@@ -528,6 +540,14 @@ dialog.fl-sheet[open] {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Cross-document view transitions (full page loads) — free progressive
+   enhancement; inert in unsupporting browsers and under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 
 /* Print styles for the article print route (PDF generation) */

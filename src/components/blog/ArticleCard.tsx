@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { FlowDroplet } from "@/components/ui/motifs";
 import type { ArticleSummary } from "@/lib/content/schema";
 
 export function formatDate(iso: string): string {
@@ -21,7 +22,11 @@ export function ArticleCard({
 }) {
   return (
     <article className="card-surface group relative flex flex-col overflow-hidden transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5">
-      <Link href={article.url} className="absolute inset-0 z-10" aria-label={article.title} />
+      <Link
+        href={article.url}
+        className="absolute inset-0 z-10 rounded-[var(--radius-card)]"
+        aria-label={article.title}
+      />
       <div className="relative aspect-[16/9] overflow-hidden bg-surface-2">
         <Image
           src={article.featuredImageUrl}
@@ -35,7 +40,8 @@ export function ArticleCard({
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-surface/70 to-transparent"
         />
-        <span className="absolute left-4 top-4 rounded-full border border-line-strong bg-abyss/70 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-azure-bright backdrop-blur-sm">
+        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-abyss/70 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-azure-bright backdrop-blur-sm">
+          <FlowDroplet size={8} />
           {article.category}
         </span>
       </div>

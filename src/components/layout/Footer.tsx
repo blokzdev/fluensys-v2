@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/ui/Logo";
+import { VoluteContour } from "@/components/ui/motifs";
 import { getCompany } from "@/lib/content/site";
 
 const QUICK_LINKS = [
@@ -17,8 +18,14 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line bg-surface">
-      <div className="container-site grid gap-12 py-16 md:grid-cols-[2fr_1fr_1fr] md:py-20">
+    <footer className="relative overflow-hidden border-t border-line bg-surface">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 -top-16 text-ink opacity-[0.04]"
+      >
+        <VoluteContour size={300} />
+      </div>
+      <div className="container-site relative grid gap-12 py-16 md:grid-cols-[2fr_1fr_1fr] md:py-20">
         <div className="max-w-md">
           <Logo variant="lockup" size="md" />
           <p className="mt-4 text-sm leading-relaxed text-ink-dim">{company.description}</p>
@@ -28,7 +35,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="FluenSys on X"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright"
+              className="tap-target flex items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -39,7 +46,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="FluenSys on LinkedIn"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright"
+              className="tap-target flex items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
                 <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
@@ -55,7 +62,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-ink-dim transition-colors hover:text-azure-bright"
+                  className="inline-block py-1 text-sm text-ink-dim transition-colors hover:text-azure-bright"
                 >
                   {link.title}
                 </Link>

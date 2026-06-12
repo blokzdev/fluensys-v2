@@ -9,7 +9,7 @@ export function Clients({ content }: { content: ClientsContent }) {
   const marqueeItems = [...content.items, ...content.items];
 
   return (
-    <section id="clients" className="border-y border-line bg-surface py-24 md:py-32">
+    <section id="clients" className="border-y border-steel-line bg-surface py-24 md:py-32">
       <div className="container-site">
         <SectionHeading
           eyebrow="Trusted by industry"

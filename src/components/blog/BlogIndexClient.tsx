@@ -37,18 +37,25 @@ export function BlogIndexClient({ articles, categories }: BlogIndexClientProps) 
   return (
     <div>
       <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-wrap items-center gap-2.5" role="group" aria-label="Filter by category">
+        <div
+          className="chip-rail flex snap-x items-center gap-2.5 overflow-x-auto md:flex-wrap md:overflow-visible"
+          role="group"
+          aria-label="Filter by category"
+        >
           <button
             type="button"
             onClick={() => setActive(null)}
             aria-pressed={active === null}
-            className={`rounded-full border px-4 py-2 font-display text-sm transition-colors ${
+            className={`flex min-h-[44px] shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2 font-display text-sm transition-colors ${
               active === null
                 ? "border-azure-bright bg-azure-deep/25 text-azure-bright"
                 : "border-line text-ink-dim hover:border-line-strong hover:text-ink"
             }`}
           >
-            All <span className="ml-1 font-mono text-xs opacity-70">{articles.length}</span>
+            All
+            <span className="rounded-full bg-steel-deep px-2 py-0.5 font-mono text-[0.65rem] text-ink-faint">
+              {articles.length}
+            </span>
           </button>
           {categories.map((category) => (
             <button
@@ -56,14 +63,16 @@ export function BlogIndexClient({ articles, categories }: BlogIndexClientProps) 
               type="button"
               onClick={() => setActive(active === category.id ? null : category.id)}
               aria-pressed={active === category.id}
-              className={`rounded-full border px-4 py-2 font-display text-sm transition-colors ${
+              className={`flex min-h-[44px] shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2 font-display text-sm transition-colors ${
                 active === category.id
                   ? "border-azure-bright bg-azure-deep/25 text-azure-bright"
                   : "border-line text-ink-dim hover:border-line-strong hover:text-ink"
               }`}
             >
-              {category.title}{" "}
-              <span className="ml-1 font-mono text-xs opacity-70">{category.count}</span>
+              {category.title}
+              <span className="rounded-full bg-steel-deep px-2 py-0.5 font-mono text-[0.65rem] text-ink-faint">
+                {category.count}
+              </span>
             </button>
           ))}
         </div>

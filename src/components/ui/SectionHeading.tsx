@@ -1,5 +1,6 @@
 import { SplitHeading } from "@/components/motion/SplitHeading";
 import { Reveal } from "@/components/motion/Reveal";
+import { FlowDroplet } from "@/components/ui/motifs";
 
 interface SectionHeadingProps {
   eyebrow: string;
@@ -14,7 +15,8 @@ export function SectionHeading({ eyebrow, title, subtitle, align = "left" }: Sec
     <div className={`flex flex-col gap-4 ${alignment} mb-12 md:mb-16`}>
       <Reveal>
         <p className="text-eyebrow">
-          <span aria-hidden className="mr-3 inline-block h-px w-8 bg-azure-bright align-middle" />
+          <FlowDroplet size={9} className="mr-2.5 inline-block align-[-1px]" />
+          <span aria-hidden className="mr-3 inline-block h-px w-6 bg-azure-bright align-middle" />
           {eyebrow}
         </p>
       </Reveal>
