@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Logo } from "@/components/ui/Logo";
 import { getCompany } from "@/lib/content/site";
 
 const QUICK_LINKS = [
@@ -19,9 +20,7 @@ export function Footer() {
     <footer id="contact" className="border-t border-line bg-surface">
       <div className="container-site grid gap-12 py-16 md:grid-cols-[2fr_1fr_1fr] md:py-20">
         <div className="max-w-md">
-          <p className="text-display text-lg font-bold tracking-[0.18em] text-ink">
-            FLUEN<span className="text-azure-bright">SYS</span>
-          </p>
+          <Logo variant="lockup" size="md" />
           <p className="mt-4 text-sm leading-relaxed text-ink-dim">{company.description}</p>
           <div className="mt-6 flex items-center gap-4">
             <a

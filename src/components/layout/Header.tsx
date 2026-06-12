@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { AuthButton } from "@/components/auth/AuthButton";
+import { Logo } from "@/components/ui/Logo";
 
 const NAV_LINKS = [
   { label: "Services", href: "/#services" },
@@ -46,12 +47,8 @@ export function Header() {
       }`}
     >
       <div className="container-site flex h-[72px] items-center justify-between">
-        <Link
-          href="/"
-          aria-label="FluenSys — home"
-          className="text-display text-xl font-bold tracking-[0.18em] text-ink"
-        >
-          FLUEN<span className="text-azure-bright">SYS</span>
+        <Link href="/" aria-label="FluenSys — home">
+          <Logo variant="lockup" size="sm" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">

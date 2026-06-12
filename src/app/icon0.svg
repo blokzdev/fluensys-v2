@@ -1,0 +1,7 @@
+<!-- FluenSys volute mark on an abyss tile. Geometry mirrors src/components/ui/Logo.tsx — keep in sync. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#04070d"/>
+  <path d="M40 20.1A16 16 0 1 1 16 34A20 20 0 0 1 36 14L47 14" stroke="#72BF44" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+  <path d="M41 34A9 9 0 1 1 32 25" stroke="#2584C5" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <circle cx="32" cy="34" r="3" fill="#2584C5"/>
+</svg>
