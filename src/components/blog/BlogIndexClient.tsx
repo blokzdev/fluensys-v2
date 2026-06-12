@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 import { ArticleCard } from "@/components/blog/ArticleCard";
 import { Reveal } from "@/components/motion/Reveal";
+import { FlowDroplet } from "@/components/ui/motifs";
 import type { ArticleSummary, Category } from "@/lib/content/schema";
 
 interface BlogIndexClientProps {
@@ -90,9 +91,16 @@ export function BlogIndexClient({ articles, categories }: BlogIndexClientProps) 
       </div>
 
       {filtered.length === 0 ? (
-        <p className="py-20 text-center text-ink-faint">
-          No articles match your filters yet — try another category or search term.
-        </p>
+        <div className="py-20 text-center">
+          <div aria-hidden className="flex items-center justify-center gap-3 text-ink-faint">
+            <FlowDroplet size={10} className="opacity-40" />
+            <FlowDroplet size={14} className="opacity-70" />
+            <FlowDroplet size={10} className="opacity-40" />
+          </div>
+          <p className="mt-5 text-ink-faint">
+            No articles match your filters yet — try another category or search term.
+          </p>
+        </div>
       ) : (
         <Reveal stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((article, i) => (

@@ -358,6 +358,28 @@ kbd {
   will-change: transform, opacity;
 }
 
+/* Impeller loading spinner (components/ui/motifs.tsx) */
+@keyframes spin-impeller {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-impeller {
+  animation: spin-impeller 1.2s linear infinite;
+}
+
+/* Slow rotation for large background contours (404, error pages) */
+@keyframes drift-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-drift {
+  animation: drift-rotate 120s linear infinite;
+}
+
 /* Marquee for client logos */
 @keyframes marquee {
   from {
