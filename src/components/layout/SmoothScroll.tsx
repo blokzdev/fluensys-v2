@@ -45,6 +45,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       if (!target) return;
       event.preventDefault();
       lenis.scrollTo(target as HTMLElement, { offset: -84 });
+      (target as HTMLElement).focus({ preventScroll: true });
       history.replaceState(null, "", url.hash);
     };
     document.addEventListener("click", onClick);

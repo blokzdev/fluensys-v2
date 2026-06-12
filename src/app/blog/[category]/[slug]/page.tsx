@@ -108,7 +108,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       />
       <Header />
       <ReadingProgress />
-      <main className="pt-[72px]">
+      <main id="main-content" className="pt-[72px]">
         {/* ------------------------------------------------ Article header */}
         <section className="relative overflow-hidden border-b border-line">
           <div aria-hidden className="bg-blueprint absolute inset-0 opacity-30" />

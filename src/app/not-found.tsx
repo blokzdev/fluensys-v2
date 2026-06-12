@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="relative flex min-h-[80svh] flex-col items-center justify-center overflow-hidden pt-[72px] text-center">
+      <main id="main-content" className="relative flex min-h-[80svh] flex-col items-center justify-center overflow-hidden pt-[72px] text-center">
         <div aria-hidden className="bg-blueprint absolute inset-0 opacity-40" />
         <div className="container-site relative">
           <p className="text-eyebrow">Pressure drop detected</p>

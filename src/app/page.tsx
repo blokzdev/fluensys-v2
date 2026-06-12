@@ -37,7 +37,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main>
+      <main id="main-content">
         <Hero content={home.hero} />
         <Pillars content={home.pillars} />
         <Expertise content={home.expertise} />

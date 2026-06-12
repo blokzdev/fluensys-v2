@@ -42,7 +42,7 @@ export default function BlogIndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="pt-[72px]">
+      <main id="main-content" className="pt-[72px]">
         <section className="relative overflow-hidden border-b border-line py-20 md:py-28">
           <div
             aria-hidden

@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="pt-[72px]">
+      <main id="main-content" className="pt-[72px]">
         <section className="relative overflow-hidden border-b border-line py-20 md:py-24">
           <div aria-hidden className="bg-blueprint absolute inset-0 opacity-40" />
           <div className="container-site relative">
