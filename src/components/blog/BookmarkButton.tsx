@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useToast } from "@/components/providers/ToastProvider";
 import { listenToBookmark, toggleBookmark } from "@/lib/firebase/db";
 
 interface BookmarkButtonProps {
@@ -13,6 +14,7 @@ interface BookmarkButtonProps {
 
 export function BookmarkButton({ article, compact = false }: BookmarkButtonProps) {
   const { user, configured, signInGuest } = useAuth();
+  const { toast } = useToast();
   const [bookmarked, setBookmarked] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -35,9 +37,16 @@ export function BookmarkButton({ article, compact = false }: BookmarkButtonProps
         const guest = await signInGuest();
         uid = guest?.uid;
       }
-      if (uid) await toggleBookmark(uid, article, bookmarked);
+      if (uid) {
+        await toggleBookmark(uid, article, bookmarked);
+        toast({
+          message: bookmarked ? "Removed from your library" : "Saved to your library",
+          tone: bookmarked ? "default" : "success",
+        });
+      }
     } catch {
       // Network/permission failure — leave state unchanged.
+      toast({ message: "Could not update bookmark", tone: "error" });
     } finally {
       setBusy(false);
     }

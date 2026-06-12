@@ -437,6 +437,30 @@ dialog.fl-sheet[open] {
   will-change: transform, opacity;
 }
 
+/* Skeleton shimmer (components/ui/Skeleton.tsx) — static under reduced motion */
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(87 87 91 / 0.14), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
 /* Dropdown menu entrance (auth menu and friends) */
 @keyframes menu-in {
   from {

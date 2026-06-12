@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from "react";
 
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useToast } from "@/components/providers/ToastProvider";
+import { ImpellerSpinner } from "@/components/ui/motifs";
 import { subscribeToNewsletter } from "@/lib/firebase/db";
 
 const TOPICS = [
@@ -19,6 +21,7 @@ const TOPICS = [
  */
 export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const { user, configured, signInGuest } = useAuth();
+  const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [topics, setTopics] = useState<string[]>([]);
@@ -40,8 +43,10 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
       if (!uid) throw new Error("auth unavailable");
       await subscribeToNewsletter({ uid, email, firstName, topics });
       setState("done");
+      toast({ message: "You're on the list", tone: "success" });
     } catch {
       setState("error");
+      toast({ message: "Subscription failed — please try again", tone: "error" });
     }
   };
 
@@ -98,9 +103,16 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
         <button
           type="submit"
           disabled={state === "busy"}
-          className="h-12 rounded-full bg-azure px-7 font-display text-sm font-medium text-white transition-colors hover:bg-azure-bright disabled:opacity-50"
+          className="flex h-12 items-center justify-center gap-2.5 rounded-full bg-azure px-7 font-display text-sm font-medium text-white transition-colors hover:bg-azure-bright disabled:opacity-50"
         >
-          {state === "busy" ? "Subscribing…" : "Subscribe"}
+          {state === "busy" ? (
+            <>
+              <ImpellerSpinner size={15} className="text-white" />
+              Subscribing…
+            </>
+          ) : (
+            "Subscribe"
+          )}
         </button>
       </div>
 
