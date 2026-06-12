@@ -1,11 +1,38 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  type ReactNode,
+} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
+
+export interface LenisControl {
+  /** Pause the smooth-scroll RAF loop (e.g. while an overlay is open). */
+  stop: () => void;
+  start: () => void;
+  scrollTo: (target: HTMLElement | string | number, options?: { offset?: number }) => void;
+}
+
+const noop = () => {};
+
+/** No-ops when Lenis is absent (reduced motion / before mount). */
+const ScrollContext = createContext<LenisControl>({
+  stop: noop,
+  start: noop,
+  scrollTo: noop,
+});
+
+export function useLenisControl(): LenisControl {
+  return useContext(ScrollContext);
+}
 
 /**
  * Site-wide smooth scrolling (Lenis) kept in lockstep with GSAP
@@ -14,6 +41,26 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
+
+  const control = useMemo<LenisControl>(
+    () => ({
+      stop: () => lenisRef.current?.stop(),
+      start: () => lenisRef.current?.start(),
+      scrollTo: (target, options) => {
+        const lenis = lenisRef.current;
+        if (lenis) {
+          lenis.scrollTo(target, options);
+        } else if (target instanceof HTMLElement) {
+          target.scrollIntoView();
+        } else if (typeof target === "string") {
+          document.querySelector(target)?.scrollIntoView();
+        } else {
+          window.scrollTo(0, target);
+        }
+      },
+    }),
+    [],
+  );
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -58,5 +105,5 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <>{children}</>;
+  return <ScrollContext.Provider value={control}>{children}</ScrollContext.Provider>;
 }
