@@ -17,7 +17,7 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="border-t border-line bg-surface">
+    <footer className="border-t border-line bg-surface">
       <div className="container-site grid gap-12 py-16 md:grid-cols-[2fr_1fr_1fr] md:py-20">
         <div className="max-w-md">
           <Logo variant="lockup" size="md" />

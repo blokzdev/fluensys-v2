@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 import { AuthButton } from "@/components/auth/AuthButton";
 import { Logo } from "@/components/ui/Logo";
+import { useScrollSpy } from "@/lib/hooks/useScrollSpy";
 
 const NAV_LINKS = [
   { label: "Services", href: "/#services" },
@@ -17,10 +18,15 @@ const NAV_LINKS = [
   { label: "Contact", href: "/#contact" },
 ];
 
+const SECTION_IDS = NAV_LINKS.filter((link) => link.href.startsWith("/#")).map((link) =>
+  link.href.slice(2),
+);
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const activeSection = useScrollSpy(SECTION_IDS, { enabled: pathname === "/" });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -43,26 +49,43 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open ? "glass border-b border-line" : "bg-transparent"
+        scrolled || open
+          ? "glass border-b border-line shadow-[0_1px_0_0_rgb(151_170_196/0.06)]"
+          : "bg-transparent"
       }`}
     >
       <div className="container-site flex h-[72px] items-center justify-between">
-        <Link href="/" aria-label="FluenSys — home">
+        <Link
+          href="/"
+          aria-label="FluenSys — home"
+          className={`origin-left transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+            scrolled ? "scale-[0.92]" : ""
+          }`}
+        >
           <Logo variant="lockup" size="sm" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
-            const active = link.href === "/blog" && pathname?.startsWith("/blog");
+            const active =
+              link.href === "/blog"
+                ? pathname?.startsWith("/blog")
+                : pathname === "/" && activeSection === link.href.slice(2);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
+                className={`relative rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
                   active ? "text-azure-bright" : "text-ink-dim hover:text-ink"
                 }`}
               >
                 {link.label}
+                <span
+                  aria-hidden
+                  className={`absolute inset-x-4 bottom-0.5 h-0.5 origin-center rounded-full bg-azure-bright transition-transform duration-300 ease-[var(--ease-out-expo)] ${
+                    active ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
               </Link>
             );
           })}

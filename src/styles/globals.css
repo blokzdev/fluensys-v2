@@ -426,6 +426,19 @@ dialog.fl-sheet[open] {
   will-change: transform, opacity;
 }
 
+/* Dropdown menu entrance (auth menu and friends) */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+}
+
+.menu-enter {
+  animation: menu-in 200ms var(--ease-out-expo);
+  transform-origin: top right;
+}
+
 /* Toast entrance (components/ui/Toast.tsx) */
 @keyframes toast-in {
   from {
