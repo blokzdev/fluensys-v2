@@ -110,7 +110,9 @@ brand, #4aa8e8 bright) + green (#72BF44) accents, Space Grotesk display /
 Inter body / JetBrains Mono data, blueprint grid textures, masked line-rise
 headings (SplitText), restrained scroll reveals, one WebGL statement piece
 (the hero flow field) — never gratuitous 3D. Motion must be 60fps
-(transform/opacity only) and fully disabled under reduced motion.
+(transform/opacity only) and fully disabled under reduced motion. Logo
+source of truth: `src/components/ui/Logo.tsx` (volute mark — the app icons
+in `src/app/` mirror its geometry).
 
 ## When you finish a change
 

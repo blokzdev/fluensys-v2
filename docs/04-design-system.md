@@ -20,10 +20,37 @@ Source of truth: the `@theme` block in `src/styles/globals.css`.
 | `azure-deep` | `#15578a` | Glows, washes |
 | `green` / `green-bright` | `#72bf44` / `#8fd95e` | **Brand green (v1 heritage)** — values, success, secondary accent |
 | `line` / `line-strong` | rgba steel 14% / 28% | Hairlines, borders |
+| `steel` / `steel-bright` / `steel-deep` | `#3a3a3c` / `#57575b` / `#28282a` | **Brand Grey 90K** — neutral hardware chrome |
+| `steel-line` | rgba 35% | Neutral hairline for chrome borders |
 
 Rules: azure is the workhorse accent; green is reserved for brand-values
 moments, success states and the gradient pairing with azure (progress bar,
-particle field). Never introduce new hues without adding tokens here first.
+particle field). **Steel is hardware**: physical-metaphor chrome only —
+kbd keys, scrollbar thumbs, rails, count badges, secondary/cancel buttons
+(`Button variant="steel"`). Steel never colours text above `ink-faint`
+weight and never carries a brand moment. Never introduce new hues without
+adding tokens here first.
+
+## Brand mark & motifs
+
+The logo is a **centrifugal-pump volute in plan view** — a two-centre
+circular-arc approximation of an Archimedean spiral, drawn as strokes:
+green outer casing ending in a tangential discharge stub, azure flow core
+arc around a filled impeller-eye dot. The tones never touch (the cutwater
+gap keeps them separable at 16px). Source of truth:
+`src/components/ui/Logo.tsx` (`lockup | mark | wordmark`, `sm | md | lg`,
+optional `monochrome`); the app-dir icon files (`src/app/icon0.svg`,
+`icon1.tsx`, `apple-icon.tsx`, `favicon.ico`) mirror its geometry. The
+wordmark sets FLUEN in green and SYS in azure.
+
+Derived ornaments live in `src/components/ui/motifs.tsx`:
+
+- `ImpellerSpinner` — six backswept blades, CSS-rotated; the canonical
+  loading indicator (forms, palette, route loading).
+- `FlowDroplet` — `currentColor` droplet; eyebrow prefixes, category
+  chips, empty states (a trio at graduated opacity).
+- `VoluteContour` — 1px-stroke spiral watermark for background art (404,
+  error page, footer corner) at 4–6% opacity.
 
 ## Typography
 
@@ -46,6 +73,20 @@ precedes every section title; display headings use `-0.02em` tracking and
 - `glass` — blurred translucency for the header and overlays.
 - Radial `azure-deep` washes light major sections from above.
 
+## Overlay & app-chrome primitives
+
+| Primitive | File | Notes |
+| --- | --- | --- |
+| `Dialog` | `src/components/ui/Dialog.tsx` | Native `<dialog>` (top layer, focus trap, Esc, inert background); `center` and `sheet` variants |
+| `BottomSheet` | `src/components/ui/BottomSheet.tsx` | Sheet variant + title bar; safe-area padded |
+| `useToast` | `src/components/providers/ToastProvider.tsx` | Queued pills (max 3), single polite live region, hover-pause |
+| Command palette | `src/components/search/` | ⌘K / Ctrl+K / `/`; lazy chunk; MiniSearch options mirror `scripts/content.mjs` |
+| `useScrollLock` | `src/lib/hooks/useScrollLock.ts` | Overflow lock + scrollbar compensation + **Lenis stop/start** — every overlay must use it |
+| `Skeleton` | `src/components/ui/Skeleton.tsx` | Steel-tinted shimmer; static under reduced motion |
+
+All interactive chrome respects a 44px minimum target (`tap-target`
+utility) and safe-area insets (`pb-safe` / `bottom-safe`).
+
 ## Motion grammar
 
 | Pattern | Implementation | Use |
@@ -57,6 +98,10 @@ precedes every section title; display headings use `-0.02em` tracking and
 | Smooth scroll | Lenis 1.1s exponential ease, ScrollTrigger-synced | Site-wide (desktop wheel) |
 | Hover | translate/scale ≤ 1.05, 300–700ms `--ease-out-expo`; arrows gain `gap` | Cards, links, buttons |
 | Marquee | CSS keyframes 42s linear, pause on hover | Client logos |
+| Overlay entrance | native `<dialog>` + `@starting-style` (progressive enhancement) | Dialog/BottomSheet/palette |
+| Menu stagger | GSAP timeline, y:48 + 0.085 stagger, reversed at 1.6× on close | Full-screen mobile menu |
+| Hide-on-scroll | transform-only translate, 300ms expo; disabled under reduced motion | Article mobile toolbar |
+| Count-up | GSAP tween over server-rendered values | Hero stats |
 
 Hard rules: transforms + opacity only (no layout properties); everything
 gated behind `prefers-reduced-motion` (content must remain fully visible

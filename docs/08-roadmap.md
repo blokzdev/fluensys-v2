@@ -49,9 +49,23 @@ priorities, not strict gates.
 - [ ] Visual QA pass on real devices (360px → 4K); Lighthouse ≥ 95 across
       the board; tune hero particle count on low-end mobile
 - [ ] Legal review of privacy/terms drafts
-- [ ] Favicon/wordmark refresh (current assets carried from v1)
+- [x] Favicon/wordmark refresh — volute mark + two-tone wordmark
+      (`src/components/ui/Logo.tsx`), app-dir icon conventions
+      (SVG + ImageResponse; single regenerated favicon.ico binary)
 - [ ] Analytics decision: GTM (`NEXT_PUBLIC_GTM_ID` is plumbed) and/or
       Vercel Analytics — implement consent UI before enabling
+
+### Shipped in the UI/UX enhancement sprint
+
+- [x] App-platform chrome: full-screen mobile menu, article bottom
+      toolbar (TOC sheet, progress ring, share, bookmark), toast system,
+      Dialog/BottomSheet primitives, Lenis-aware scroll locking
+- [x] PWA manifest, route loading skeletons, error boundary, skip link,
+      custom scrollbar, steel token family, flow motif library
+- [x] Deferred from the sprint: maskable 512px manifest icon (add
+      `src/app/icon2.tsx` with safe-zone padding when wanted); React
+      `viewTransition` flag (double-animation risk with Lenis/GSAP —
+      cross-document CSS `@view-transition` shipped instead)
 
 ## Phase 2 — Engagement & growth
 
@@ -59,7 +73,9 @@ priorities, not strict gates.
       segmentation, one-click unsubscribe (docs/05 §Phase 2)
 - [ ] "My library" page: bookmarks list, reading history
 - [ ] Anonymous → Google account linking (`linkWithPopup`)
-- [ ] Site-wide search UI (⌘K dialog) on the prebuilt MiniSearch index
+- [x] Site-wide search UI (⌘K dialog) on the prebuilt MiniSearch index
+      (lazy chunk, recents, category quick links, combobox keyboard
+      pattern)
 - [ ] Comment moderation queue (status field + admin route with
       `FIREBASE_SERVICE_ACCOUNT_KEY`) + Firebase App Check
 - [ ] Dynamic OG title cards (`next/og`) for articles
