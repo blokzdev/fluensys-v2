@@ -87,6 +87,9 @@ export function BlogIndexClient({ articles, categories }: BlogIndexClientProps) 
             placeholder="Search articles…"
             className="card-surface h-11 w-full pl-11 pr-4 text-sm text-ink placeholder:text-ink-faint focus:border-azure-bright focus:outline-none"
           />
+          <span className="mt-2 hidden text-xs text-ink-faint md:block">
+            Press <kbd>/</kbd> anywhere to search everything
+          </span>
         </label>
       </div>
 

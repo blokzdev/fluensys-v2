@@ -253,6 +253,11 @@ dialog.fl-center[open] {
   }
 }
 
+/* Command palette sits high in the viewport rather than dead centre */
+dialog.palette-dialog {
+  margin-top: min(12svh, 8rem);
+}
+
 dialog.fl-sheet {
   position: fixed;
   inset: auto 0 0 0;

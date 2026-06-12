@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import { SearchProvider } from "@/components/search/SearchProvider";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/seo";
@@ -83,7 +84,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SkipLink />
         <AuthProvider>
           <ToastProvider>
-            <SmoothScroll>{children}</SmoothScroll>
+            <SmoothScroll>
+              <SearchProvider>{children}</SearchProvider>
+            </SmoothScroll>
           </ToastProvider>
         </AuthProvider>
       </body>

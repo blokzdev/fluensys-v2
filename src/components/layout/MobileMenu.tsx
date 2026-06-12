@@ -9,6 +9,7 @@ import { useGSAP } from "@gsap/react";
 
 import { AuthButton } from "@/components/auth/AuthButton";
 import { useLenisControl } from "@/components/layout/SmoothScroll";
+import { useSearch } from "@/components/search/SearchProvider";
 import { Logo } from "@/components/ui/Logo";
 import { ImpellerIcon } from "@/components/ui/motifs";
 import { useFocusTrap } from "@/lib/hooks/useFocusTrap";
@@ -36,6 +37,7 @@ export function MobileMenu({ open, onClose, links }: MobileMenuProps) {
   const pendingHash = useRef<string | null>(null);
   const pathname = usePathname();
   const lenis = useLenisControl();
+  const { openPalette } = useSearch();
 
   useEffect(() => {
     if (open) setVisible(true);
@@ -141,6 +143,24 @@ export function MobileMenu({ open, onClose, links }: MobileMenuProps) {
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
             <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
           </svg>
+        </button>
+      </div>
+
+      <div className="container-site mt-4">
+        <button
+          type="button"
+          data-menu-item
+          onClick={() => {
+            onClose();
+            openPalette();
+          }}
+          className="card-surface flex min-h-[48px] w-full items-center gap-3 px-4 text-sm text-ink-faint transition-colors hover:text-ink"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2" aria-hidden>
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+          </svg>
+          Search the Journal…
         </button>
       </div>
 

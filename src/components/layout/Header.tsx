@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 import { AuthButton } from "@/components/auth/AuthButton";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { useSearch } from "@/components/search/SearchProvider";
 import { Logo } from "@/components/ui/Logo";
 import { useScrollSpy } from "@/lib/hooks/useScrollSpy";
 
@@ -28,6 +29,12 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const activeSection = useScrollSpy(SECTION_IDS, { enabled: pathname === "/" });
+  const { openPalette } = useSearch();
+  const [isMac, setIsMac] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad/i.test(navigator.platform));
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -86,6 +93,32 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={openPalette}
+            aria-label="Search the site"
+            className="hidden items-center gap-2.5 rounded-full border border-line py-2 pl-3.5 pr-2.5 text-sm text-ink-dim transition-colors hover:border-line-strong hover:text-ink sm:flex"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4 stroke-current" fill="none" strokeWidth="2" aria-hidden>
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+            </svg>
+            <span className="hidden md:inline">Search</span>
+            {isMac !== null && (
+              <kbd className="hidden md:inline-block">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={openPalette}
+            aria-label="Search the site"
+            className="tap-target flex items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:text-ink sm:hidden"
+          >
+            <svg viewBox="0 0 24 24" className="h-4.5 w-4.5 stroke-current" fill="none" strokeWidth="2" aria-hidden>
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+            </svg>
+          </button>
           <div className="hidden sm:block">
             <AuthButton />
           </div>
