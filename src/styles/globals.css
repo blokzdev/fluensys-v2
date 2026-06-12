@@ -122,6 +122,12 @@ kbd {
   scroll-margin-top: 5rem;
 }
 
+/* Native fallback for anchor landings when Lenis is absent
+   (reduced motion) — matches the fixed 72px header + breathing room. */
+section[id] {
+  scroll-margin-top: 84px;
+}
+
 .skip-link {
   position: fixed;
   top: 1rem;
