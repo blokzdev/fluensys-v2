@@ -1,34 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
+
+import { useReadingProgress } from "@/lib/hooks/useReadingProgress";
 
 /** Thin progress bar pinned under the header while reading an article. */
 export function ReadingProgress() {
   const barRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const doc = document.documentElement;
-      const total = doc.scrollHeight - window.innerHeight;
-      const progress = total > 0 ? Math.min(1, window.scrollY / total) : 0;
+  useReadingProgress(
+    useCallback((progress: number) => {
       if (barRef.current) {
         barRef.current.style.transform = `scaleX(${progress})`;
       }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
+    }, []),
+  );
 
   return (
     <div aria-hidden className="fixed inset-x-0 top-[72px] z-40 h-[2px] bg-transparent">

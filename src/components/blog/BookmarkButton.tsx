@@ -7,9 +7,11 @@ import { listenToBookmark, toggleBookmark } from "@/lib/firebase/db";
 
 interface BookmarkButtonProps {
   article: { slug: string; title: string; category: string; url: string };
+  /** Icon-only round button for tight chrome (mobile toolbar). */
+  compact?: boolean;
 }
 
-export function BookmarkButton({ article }: BookmarkButtonProps) {
+export function BookmarkButton({ article, compact = false }: BookmarkButtonProps) {
   const { user, configured, signInGuest } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -41,6 +43,36 @@ export function BookmarkButton({ article }: BookmarkButtonProps) {
     }
   };
 
+  const icon = (
+    <svg
+      viewBox="0 0 24 24"
+      className={compact ? "h-4.5 w-4.5" : "h-3.5 w-3.5"}
+      fill={bookmarked ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden
+    >
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" strokeLinejoin="round" />
+    </svg>
+  );
+
+  if (compact) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={busy}
+        aria-pressed={bookmarked}
+        aria-label={bookmarked ? "Remove bookmark" : "Bookmark this article"}
+        className={`tap-target flex items-center justify-center rounded-full transition-colors ${
+          bookmarked ? "text-green-bright" : "text-ink-dim hover:text-ink"
+        }`}
+      >
+        {icon}
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
@@ -54,16 +86,7 @@ export function BookmarkButton({ article }: BookmarkButtonProps) {
           : "border-line text-ink-dim hover:border-azure-bright hover:text-azure-bright"
       }`}
     >
-      <svg
-        viewBox="0 0 24 24"
-        className="h-3.5 w-3.5"
-        fill={bookmarked ? "currentColor" : "none"}
-        stroke="currentColor"
-        strokeWidth="1.8"
-        aria-hidden
-      >
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" strokeLinejoin="round" />
-      </svg>
+      {icon}
       {bookmarked ? "Saved" : "Save"}
     </button>
   );

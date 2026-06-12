@@ -1,37 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useShare } from "@/lib/hooks/useShare";
 
 export function ShareBar({ title, url }: { title: string; url: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      // Clipboard unavailable — ignore.
-    }
-  };
-
-  const shareNative = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-        return;
-      } catch {
-        // Dismissed.
-      }
-    }
-    await copy();
-  };
+  const { share: shareNative, copied } = useShare(title, url);
 
   const xShare = `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
   const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
   const itemClass =
-    "flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright";
+    "tap-target flex items-center justify-center rounded-full border border-line text-ink-dim transition-colors hover:border-azure-bright hover:text-azure-bright";
 
   return (
     <div className="flex items-center gap-2.5" aria-label="Share this article">

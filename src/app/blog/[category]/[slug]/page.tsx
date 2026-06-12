@@ -11,6 +11,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ArticleCard, formatDate } from "@/components/blog/ArticleCard";
 import { BookmarkButton } from "@/components/blog/BookmarkButton";
 import { Comments } from "@/components/blog/Comments";
+import { MobileToolbar } from "@/components/blog/MobileToolbar";
 import { NewsletterForm } from "@/components/blog/NewsletterForm";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareBar } from "@/components/blog/ShareBar";
@@ -108,7 +109,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       />
       <Header />
       <ReadingProgress />
-      <main id="main-content" className="pt-[72px]">
+      <MobileToolbar
+        headings={article.headings}
+        title={fm.title}
+        url={absoluteUrl(article.url)}
+        article={{
+          slug: fm.slug,
+          title: fm.title,
+          category: fm.category,
+          url: article.url,
+        }}
+      />
+      <main id="main-content" className="pb-24 pt-[72px] lg:pb-0">
         {/* ------------------------------------------------ Article header */}
         <section className="relative overflow-hidden border-b border-line">
           <div aria-hidden className="bg-blueprint absolute inset-0 opacity-30" />
