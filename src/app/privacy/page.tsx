@@ -20,7 +20,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Header />
-      <main className="pt-[72px]">
+      <main id="main-content" className="pt-[72px]">
         <div className="container-site max-w-3xl py-20">
           <p className="text-eyebrow mb-5">Legal</p>
           <h1 className="text-display text-4xl font-bold text-ink">Privacy Policy</h1>

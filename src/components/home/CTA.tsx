@@ -4,7 +4,7 @@ import type { HomeContent } from "@/lib/content/site";
 
 export function CTA({ content, email }: { content: HomeContent["cta"]; email: string }) {
   return (
-    <section className="relative overflow-hidden py-28 md:py-40">
+    <section id="contact" className="relative scroll-mt-24 overflow-hidden py-28 md:py-40">
       <div
         aria-hidden
         className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,#15578a4d,transparent_72%)]"

@@ -183,6 +183,8 @@ function sync() {
 
 function buildIndex() {
   const articles = loadArticles({ strict: false }).filter((a) => a.fm.status === "published");
+  // Mirrored by src/components/search/useSearchIndex.ts (MiniSearch.loadJSON
+  // rejects on any mismatch) — update both together.
   const mini = new MiniSearch({
     fields: ["title", "excerpt", "tags", "category", "body"],
     storeFields: ["title", "excerpt", "category", "tags", "url", "publishedAt", "readingTime", "image"],

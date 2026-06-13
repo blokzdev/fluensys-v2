@@ -4,10 +4,13 @@ import Image from "next/image";
 import { useEffect, useState, type FormEvent } from "react";
 
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useToast } from "@/components/providers/ToastProvider";
+import { ImpellerSpinner } from "@/components/ui/motifs";
 import { addComment, listenToComments, type CommentDoc } from "@/lib/firebase/db";
 
 export function Comments({ slug }: { slug: string }) {
   const { user, configured, signInGoogle, signInGuest } = useAuth();
+  const { toast } = useToast();
   const [comments, setComments] = useState<CommentDoc[]>([]);
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
@@ -28,8 +31,10 @@ export function Comments({ slug }: { slug: string }) {
     try {
       await addComment(slug, user, body);
       setBody("");
+      toast({ message: "Comment posted", tone: "success" });
     } catch {
       setError("Could not post your comment. Please try again.");
+      toast({ message: "Could not post your comment", tone: "error" });
     } finally {
       setBusy(false);
     }
@@ -66,9 +71,16 @@ export function Comments({ slug }: { slug: string }) {
             <button
               type="submit"
               disabled={busy || body.trim().length < 2}
-              className="rounded-full bg-azure px-6 py-2 font-display text-sm text-white transition-colors hover:bg-azure-bright disabled:opacity-50"
+              className="flex min-h-[40px] items-center gap-2 rounded-full bg-azure px-6 py-2 font-display text-sm text-white transition-colors hover:bg-azure-bright disabled:opacity-50"
             >
-              {busy ? "Posting…" : "Post comment"}
+              {busy ? (
+                <>
+                  <ImpellerSpinner size={13} className="text-white" />
+                  Posting…
+                </>
+              ) : (
+                "Post comment"
+              )}
             </button>
           </div>
           {error ? <p className="mt-2 text-xs text-red-400">{error}</p> : null}

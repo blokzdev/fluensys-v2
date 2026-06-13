@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { ToastProvider } from "@/components/providers/ToastProvider";
+import { SearchProvider } from "@/components/search/SearchProvider";
+import { SkipLink } from "@/components/layout/SkipLink";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/seo";
 
@@ -59,13 +62,6 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
-  icons: {
-    icon: [
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-    ],
-    apple: "/apple-touch-icon.png",
-  },
   robots: {
     index: true,
     follow: true,
@@ -85,8 +81,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body>
+        <SkipLink />
         <AuthProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <ToastProvider>
+            <SmoothScroll>
+              <SearchProvider>{children}</SearchProvider>
+            </SmoothScroll>
+          </ToastProvider>
         </AuthProvider>
       </body>
     </html>

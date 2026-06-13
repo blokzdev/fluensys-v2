@@ -41,6 +41,28 @@ export function Hero({ content }: { content: HomeContent["hero"] }) {
         { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.12, delay: 0.5 },
       );
 
+      // Count the hero stats up from zero; the real value is server-
+      // rendered, so SEO and no-JS/reduced-motion users see it untouched.
+      gsap.utils.toArray<HTMLElement>("[data-hero-stat]").forEach((el) => {
+        const value = el.dataset.heroStat ?? "";
+        const match = value.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
+        if (!match) return;
+        const [, prefix, num, suffix] = match;
+        const counter = { v: 0 };
+        gsap.to(counter, {
+          v: parseFloat(num),
+          duration: 1.6,
+          delay: 0.9,
+          ease: "power2.out",
+          onUpdate: () => {
+            el.textContent = `${prefix}${Math.round(counter.v)}${suffix}`;
+          },
+          onComplete: () => {
+            el.textContent = value;
+          },
+        });
+      });
+
       // Slow parallax drift of the scene as you scroll away.
       gsap.to("[data-hero-canvas]", {
         yPercent: 18,
@@ -104,7 +126,12 @@ export function Hero({ content }: { content: HomeContent["hero"] }) {
           {content.stats.map((stat) => (
             <div key={stat.label} className="border-l border-line-strong pl-5">
               <dt className="sr-only">{stat.label}</dt>
-              <dd className="text-display text-3xl font-semibold text-ink">{stat.value}</dd>
+              <dd
+                data-hero-stat={stat.value}
+                className="text-display text-3xl font-semibold text-ink"
+              >
+                {stat.value}
+              </dd>
               <dd className="mt-1 text-xs leading-relaxed text-ink-faint">{stat.label}</dd>
             </div>
           ))}
